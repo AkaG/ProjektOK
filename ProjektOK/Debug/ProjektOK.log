@@ -1,14 +1,16 @@
-﻿Build started 2016-01-05 12:09:40.
-     1>Project "D:\Studia\Semestr 3\OK\ProjektOK\ProjektOK\ProjektOK.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2016-01-05 16:19:43.
+     1>Project "C:\Users\mateu_000\Documents\GitHubVisualStudio\ProjektOK\ProjektOK\ProjektOK.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\Programy\MS Visual Studio 2013\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Ant.cpp Source.cpp
          Source.cpp
+         Ant.cpp
+         Generating Code...
        Link:
-         D:\Programy\MS Visual Studio 2013\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Studia\Semestr 3\OK\ProjektOK\Debug\ProjektOK.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Studia\Semestr 3\OK\ProjektOK\Debug\ProjektOK.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Studia\Semestr 3\OK\ProjektOK\Debug\ProjektOK.lib" /MACHINE:X86 Debug\Ant.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\mateu_000\Documents\GitHubVisualStudio\ProjektOK\Debug\ProjektOK.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\mateu_000\Documents\GitHubVisualStudio\ProjektOK\Debug\ProjektOK.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\mateu_000\Documents\GitHubVisualStudio\ProjektOK\Debug\ProjektOK.lib" /MACHINE:X86 Debug\Ant.obj
          Debug\Source.obj
-         ProjektOK.vcxproj -> D:\Studia\Semestr 3\OK\ProjektOK\Debug\ProjektOK.exe
-     1>Done Building Project "D:\Studia\Semestr 3\OK\ProjektOK\ProjektOK\ProjektOK.vcxproj" (Build target(s)).
+         ProjektOK.vcxproj -> C:\Users\mateu_000\Documents\GitHubVisualStudio\ProjektOK\Debug\ProjektOK.exe
+     1>Done Building Project "C:\Users\mateu_000\Documents\GitHubVisualStudio\ProjektOK\ProjektOK\ProjektOK.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.61
+Time Elapsed 00:00:04.02

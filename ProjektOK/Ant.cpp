@@ -1,95 +1,95 @@
 #include "Ant.h"
+#include <vector>
 
 
-Ant::Ant()
+Instance::Instance()
 {
 }
 
 
-Ant::Ant(int n)
+Instance::Instance(int n)
 {
-	this->n = n;
-	this->m = (rand() % (n / 2 - 2)) + 2;
+	this->number_of_tasks = n;
+	this->number_of_breaks = (rand() % (n / 2 - 2)) + 2;
 
-	tab1 = new int *[n];
-	for (int i = 0; i < n; i++){
-		tab1[i] = new int[n];
+	tasks.resize(number_of_tasks);
+	breaks.resize(number_of_breaks);
+	for (auto &i :tasks) {
+		i.resize(2);
 	}
 
-	tab2 = new int *[n];
-	for (int i = 0; i < n; i++){
-		tab2[i] = new int[n];
-	}
-
-	inst = new int *[n];
-	for (int i = 0; i < n; i++){
-		inst[i] = new int[2];
-	}
-
-	breaks = new int *[this->m];
-	for (int i = 0; i < this->m; i++){
-		breaks[i] = new int[4];
+	for (auto &i : breaks) {
+		i.resize(2);
 	}
 }
 
-Ant::~Ant()
+Instance::~Instance()
 {
-	for (int i = 0; i < n; i++){
-		delete[] tab1[i];
-	}
-	delete[] tab1;
-	tab1 = NULL;
-
-	for (int i = 0; i < n; i++){
-		delete[] tab2[i];
-	}
-	delete[] tab2;
-	tab2 = NULL;
-
-	for (int i = 0; i < n; i++){
-		delete[] inst[i];
-	}
-	delete[] inst;
-	inst = NULL;
-
-	for (int i = 0; i < m; i++){
-		delete[] breaks[i];
-	}
-	delete[] breaks;
-	breaks = NULL;
 }
 
 
-void Ant::generateInst(int max, int min)
+void Instance::generate(int max, int min)
 {
-	this->maxDl = max;
-	this->minDl = min;
+	this->max_task_length = max;
+	this->min_task_length = min;
 
-	for (int i = 0; i < n; i++){
-		inst[i][0] = (rand() % (maxDl - minDl)) + minDl;
-		inst[i][1] = (rand() % (maxDl - minDl)) + minDl;
+	for (int i = 0; i < number_of_tasks; i++){
+		tasks[i][0] = (rand() % (max_task_length - min_task_length)) + min_task_length;
+		tasks[i][1] = (rand() % (max_task_length - min_task_length)) + min_task_length;
 	}
 }
 
-void Ant::generateBreaks()
+void Instance::generateBreaks()
 {
 	int sumaZadan = 0;
-	int najkrotsze = maxDl;
+	int najkrotsze = max_task_length;
 
 	int minBreak = 5;
 	int maxBreak = 50;
 
-	for (int i = 0; i < n; i++){
-		sumaZadan += inst[i][0];
-		if (inst[i][0] < najkrotsze)
-			najkrotsze = inst[i][0];
+	for (int i = 0; i < number_of_tasks; i++){
+		sumaZadan += tasks[i][0];
+		if (tasks[i][0] < najkrotsze)
+			najkrotsze = tasks[i][0];
 	}
 	
 	breaks[0][0] = ((rand() % 3) + 1) * najkrotsze;
 	breaks[0][1] = breaks[0][0] + ((rand() % maxBreak) + minBreak);
 
-	for (int i = 1; i < m; i++){
-		breaks[i][0] = breaks[i - i][1] + ((rand() % (3 * maxDl)) + minDl);
+	for (int i = 1; i < number_of_breaks; i++){
+		breaks[i][0] = breaks[i - i][1] + ((rand() % (3 * max_task_length)) + min_task_length);
 		breaks[i][1] = breaks[i][0] + ((rand() % maxBreak) + minBreak);
 	}
+}
+
+void Instance::generateRandomSolution()
+{
+	std::vector<bool> used;
+	for (auto &i: used) {
+		i = false;
+	}
+
+	int number_of_unused = number_of_tasks;
+
+	for (auto &task : solution) {
+		int random_number = rand() % number_of_unused;
+
+		int index_of_choosed = 0;
+		while (index_of_choosed <= random_number) {
+			if (used[index_of_choosed] == false)
+				index_of_choosed++;
+		}
+		used[index_of_choosed] = true;
+
+
+
+
+		number_of_unused--;
+	}
+	
+}
+
+std::vector<std::vector<int>> Instance::getSolution()
+{
+	return solution;
 }

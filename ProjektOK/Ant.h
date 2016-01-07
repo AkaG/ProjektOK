@@ -3,21 +3,25 @@
 #include <cstdio>
 #include <ctime>
 
-class Ant
+class Instance
 {
 private:
-	int **tab1; //tablica dla 1 maszyny
-	int **tab2; //tablica dla 2 maszyny
-	int **inst; //tablica [n][2] z wylosowanymi czasami zadan dla maszyn
-	int **breaks; //tablica [m][4] z czasami przerwan 0-rozpoczecie przerwy 1 maszyny, 1-zakonczenie, 2-rozpoczecie dla 2 maszymy, 3-zakonczenie
+	std::vector<std::vector<float>> feromone_table; //tablica dla 1 maszyny
+	std::vector<std::vector<int>> tasks; //tablica [n][2] z wylosowanymi czasami zadan dla maszyn
+	std::vector<std::vector<int>> breaks; //tablica [m][4] z czasami przerwan 0-rozpoczecie przerwy 1 maszyny, 1-zakonczenie, 2-rozpoczecie dla 2 maszymy, 3-zakonczenie
 				  //czy robimy wspolne przerwy dla maszyn?
-	int n, m, maxDl, minDl; //n-liczba elenentow, m-liczba przerw, maxDl- max dlugosc zadania, minDl - minimalna dlugosc zadania
+	int number_of_tasks, number_of_breaks, max_task_length, min_task_length; 
+	
+	std::vector<std::vector<int>> solution; //tablica [2][n] czasów rozpoczêcia poszczególnych zadañ na obu maszynach
 public:
-	Ant();
-	Ant(int n);
-	~Ant();
+	Instance();
+	Instance(int n);
+	~Instance();
 
-	void generateInst(int max, int min);
+	void generate(int max, int min);
 	void generateBreaks();
+	void generateRandomSolution();
+
+	std::vector<std::vector<int>> getSolution();
 };
 

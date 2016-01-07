@@ -11,12 +11,12 @@ using namespace std;
 
 int main(){
 	int n = 50;
-	Ant *ant;
-	ant = new Ant(50);
+	Instance *instance;
+	instance = new Instance(50);
 
-	ant->generateInst(10000, 10);
-	ant->generateBreaks();
+	instance->generate(10000, 10);
+	instance->generateBreaks();
 
-	delete ant;
+	delete instance;
 	return 0;
 }
