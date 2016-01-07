@@ -1,6 +1,4 @@
 #include "Ant.h"
-#include <vector>
-
 
 Instance::Instance()
 {
@@ -12,14 +10,19 @@ Instance::Instance(int n)
 	this->number_of_tasks = n;
 	this->number_of_breaks = (rand() % (n / 2 - 2)) + 2;
 
-	tasks.resize(number_of_tasks);
-	breaks.resize(number_of_breaks);
+	tasks.resize(sizeof(std::vector<int>)*number_of_tasks);
 	for (auto &i :tasks) {
-		i.resize(2);
+		i.resize(sizeof(int) * 2);
 	}
 
+	breaks.resize(sizeof(std::vector<int>) * number_of_breaks);
 	for (auto &i : breaks) {
-		i.resize(2);
+		i.resize(sizeof(int) * 2);
+	}
+
+	feromone_table.resize(sizeof(std::vector<float>) * number_of_tasks);
+	for (auto &i : feromone_table) {
+		i.resize(sizeof(float) * number_of_tasks);
 	}
 }
 
@@ -62,32 +65,38 @@ void Instance::generateBreaks()
 	}
 }
 
-void Instance::generateRandomSolution()
+Solution Instance::generateRandomSolution()
 {
+	Solution solution;
 	std::vector<bool> used;
+	used.resize(sizeof(bool)*number_of_tasks);
 	for (auto &i: used) {
 		i = false;
 	}
 
 	int number_of_unused = number_of_tasks;
 
-	for (auto &task : solution) {
+	while (number_of_unused > 0) {
 		int random_number = rand() % number_of_unused;
 
 		int index_of_choosed = 0;
-		while (index_of_choosed <= random_number) {
-			if (used[index_of_choosed] == false)
-				index_of_choosed++;
+		while (!random_number) {
+			if (used[++index_of_choosed] == false)
+				random_number--;
+			if (index_of_choosed == number_of_tasks)
+				index_of_choosed = 0;
 		}
 		used[index_of_choosed] = true;
-
-
-
+		
+		for (auto &sol : solution) {
+			sol[number_of_tasks - number_of_unused] = index_of_choosed;
+		}
 
 		number_of_unused--;
 	}
-	
+	return solution;
 }
+
 
 std::vector<std::vector<int>> Instance::getSolution()
 {

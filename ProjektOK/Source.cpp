@@ -16,7 +16,9 @@ int main(){
 
 	instance->generate(10000, 10);
 	instance->generateBreaks();
+	instance->generateRandomSolution();
 
 	delete instance;
+	system("pause");
 	return 0;
 }
