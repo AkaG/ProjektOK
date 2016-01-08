@@ -10,13 +10,14 @@ using namespace std;
 // Super projekt na OK (´◉◞౪◟◉)
 
 int main(){
+	srand(time(NULL));
 	int n = 50;
 	Instance *instance;
 	instance = new Instance(50);
 
-	instance->generate(10000, 10);
+	instance->generateTasks(100, 25);
 	instance->generateBreaks();
-	instance->generateRandomSolution();
+	instance->printSolution(instance->generateRandomSolution());
 
 	delete instance;
 	system("pause");

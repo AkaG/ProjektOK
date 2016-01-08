@@ -24,10 +24,11 @@ public:
 	Instance(int n);
 	~Instance();
 
-	void generate(int max, int min);
+	void generateTasks(int max, int min);
 	void generateBreaks();
     Solution generateRandomSolution();
 
 	std::vector<std::vector<int>> getSolution();
+	void printSolution(Solution solution);
 };
 

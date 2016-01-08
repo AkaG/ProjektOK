@@ -10,19 +10,19 @@ Instance::Instance(int n)
 	this->number_of_tasks = n;
 	this->number_of_breaks = (rand() % (n / 2 - 2)) + 2;
 
-	tasks.resize(sizeof(std::vector<int>)*number_of_tasks);
+	tasks.resize(number_of_tasks);
 	for (auto &i :tasks) {
-		i.resize(sizeof(int) * 2);
+		i.resize( 2);
 	}
 
-	breaks.resize(sizeof(std::vector<int>) * number_of_breaks);
+	breaks.resize( number_of_breaks);
 	for (auto &i : breaks) {
-		i.resize(sizeof(int) * 2);
+		i.resize( 2);
 	}
 
-	feromone_table.resize(sizeof(std::vector<float>) * number_of_tasks);
+	feromone_table.resize( number_of_tasks);
 	for (auto &i : feromone_table) {
-		i.resize(sizeof(float) * number_of_tasks);
+		i.resize( number_of_tasks);
 	}
 }
 
@@ -31,7 +31,7 @@ Instance::~Instance()
 }
 
 
-void Instance::generate(int max, int min)
+void Instance::generateTasks(int max, int min)
 {
 	this->max_task_length = max;
 	this->min_task_length = min;
@@ -69,22 +69,25 @@ Solution Instance::generateRandomSolution()
 {
 	Solution solution;
 	std::vector<bool> used;
-	used.resize(sizeof(bool)*number_of_tasks);
+	used.resize(number_of_tasks);
 	for (auto &i: used) {
 		i = false;
+	}
+
+	solution.resize(2);
+	for (auto &i : solution) {
+		i.resize(number_of_tasks);
 	}
 
 	int number_of_unused = number_of_tasks;
 
 	while (number_of_unused > 0) {
-		int random_number = rand() % number_of_unused;
+		int random_number = (rand() % number_of_unused) + 1;
 
-		int index_of_choosed = 0;
-		while (!random_number) {
-			if (used[++index_of_choosed] == false)
+		int index_of_choosed = -1;
+		while (random_number){
+			if (used[(++index_of_choosed)] == false)
 				random_number--;
-			if (index_of_choosed == number_of_tasks)
-				index_of_choosed = 0;
 		}
 		used[index_of_choosed] = true;
 		
@@ -101,4 +104,35 @@ Solution Instance::generateRandomSolution()
 std::vector<std::vector<int>> Instance::getSolution()
 {
 	return solution;
+}
+
+void Instance::printSolution(Solution solution)
+{
+	std::cout << "First machine\n";
+	
+	int currentBreak = 0;
+	int pointer = 0;
+	for (auto task : solution[0]) {
+		if (currentBreak < number_of_breaks) {
+			if (tasks[task][0] >
+				(breaks[currentBreak][0] - pointer)) {
+				while (pointer < breaks[currentBreak][0]) {
+					std::cout << "! ";
+					pointer++;
+				}
+				while (pointer < breaks[currentBreak][1]) {
+					std::cout << "_ ";
+					pointer++;
+				}
+			}
+			currentBreak++;
+		}
+		for (int i = pointer; pointer < tasks[task][0] + i; pointer++) {
+			std::cout << task << " ";
+		}
+	}
+	std::cout << std::endl;
+	for (auto task : solution[0]) {
+		std::cout << task << std::endl;
+	}
 }
