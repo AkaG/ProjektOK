@@ -157,6 +157,7 @@ int ACO::getSolutionLength(Solution solution)
 {
 	int currentBreak = 0;
 	int pointer = 0;
+	int secondMachinePointer = 0;
 	for (auto task : solution[0]) {
 		if (currentBreak < number_of_breaks) {
 			if (tasks[task][0] >
@@ -171,6 +172,9 @@ int ACO::getSolutionLength(Solution solution)
 			}
 		}
 		for (int i = pointer; pointer < tasks[task][0] + i; pointer++);
+		if (task == 0)
+			secondMachinePointer = pointer;
+		for (int i = secondMachinePointer; secondMachinePointer < tasks[task][1] + i; secondMachinePointer++);
 	}
-	return pointer;
+	return secondMachinePointer;
 }
