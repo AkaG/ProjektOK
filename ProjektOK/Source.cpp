@@ -3,7 +3,7 @@
 #include <cstdio>
 #include <ctime>
 
-#include "Ant.h"
+#include "ACO.h"
 
 using namespace std;
 

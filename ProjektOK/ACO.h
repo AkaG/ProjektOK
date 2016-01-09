@@ -13,8 +13,7 @@ class Instance
 private:
 	FeromoneTable feromone_table; //tablica dla 1 maszyny
 	Tasks tasks; //tablica [n][2] z wylosowanymi czasami zadan dla maszyn
-	Breaks breaks; //tablica [m][4] z czasami przerwan 0-rozpoczecie przerwy 1 maszyny, 1-zakonczenie, 2-rozpoczecie dla 2 maszymy, 3-zakonczenie
-				  //czy robimy wspolne przerwy dla maszyn?
+	Breaks breaks; //tablica [m][2] z czasami przerwan 0-rozpoczecie przerwy 1 maszyny, 1-zakonczenie
 	int number_of_tasks, number_of_breaks, max_task_length, min_task_length; 
 	
 	Solution solution; //tablica [2][n] z kolejnoœci¹ zadañ
