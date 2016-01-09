@@ -1,11 +1,11 @@
 #include "ACO.h"
 
-Instance::Instance()
+ACO::ACO()
 {
 }
 
 
-Instance::Instance(int number_of_tasks, int number_of_ants)
+ACO::ACO(int number_of_tasks, int number_of_ants)
 {
 	this->number_of_tasks = number_of_tasks;
 	this->number_of_breaks = (rand() % (number_of_tasks / 2 - 2)) + 2;
@@ -29,38 +29,38 @@ Instance::Instance(int number_of_tasks, int number_of_ants)
 	ants = new Ant(number_of_ants);
 }
 
-Instance::~Instance()
+ACO::~ACO()
 {
 	delete ants;
 }
 
 
-void Instance::generateTasks(int max, int min)
+void ACO::generateTasks(int max, int min)
 {
 	this->max_task_length = max;
 	this->min_task_length = min;
 
-	for (int i = 0; i < number_of_tasks; i++){
+	for (int i = 0; i < number_of_tasks; i++) {
 		tasks[i][0] = (rand() % (max_task_length - min_task_length)) + min_task_length;
 		tasks[i][1] = (rand() % (max_task_length - min_task_length)) + min_task_length;
 	}
 }
 
-void Instance::generateBreaks()
+void ACO::generateBreaks()
 {
-	int sumaZadan = 0;
-	int najkrotsze = max_task_length;
+	int sumOfTasks = 0;
+	int shortest = max_task_length;
 
 	int minBreak = 5;
 	int maxBreak = 50;
 
 	for (int i = 0; i < number_of_tasks; i++){
-		sumaZadan += tasks[i][0];
-		if (tasks[i][0] < najkrotsze)
-			najkrotsze = tasks[i][0];
+		sumOfTasks += tasks[i][0];
+		if (tasks[i][0] < shortest)
+			shortest = tasks[i][0];
 	}
 	
-	breaks[0][0] = ((rand() % 3) + 1) * najkrotsze;
+	breaks[0][0] = ((rand() % 3) + 1) * shortest;
 	breaks[0][1] = breaks[0][0] + ((rand() % maxBreak) + minBreak);
 
 	for (int i = 1; i < number_of_breaks; i++){
@@ -69,7 +69,7 @@ void Instance::generateBreaks()
 	}
 }
 
-Solution Instance::generateRandomSolution()
+Solution ACO::generateRandomSolution()
 {
 	Solution solution;
 	std::vector<bool> used;
@@ -105,12 +105,12 @@ Solution Instance::generateRandomSolution()
 }
 
 
-std::vector<std::vector<int>> Instance::getSolution()
+std::vector<std::vector<int>> ACO::getSolution()
 {
 	return solution;
 }
 
-void Instance::printSolution(Solution solution)
+void ACO::printSolution(Solution solution)
 {
 	std::cout << "First machine\n";
 	
@@ -128,12 +128,23 @@ void Instance::printSolution(Solution solution)
 					std::cout << "_ ";
 					pointer++;
 				}
+				currentBreak++;
 			}
-			currentBreak++;
 		}
 		for (int i = pointer; pointer < tasks[task][0] + i; pointer++) {
 			std::cout << task << " ";
 		}
+	}
+	while (currentBreak < number_of_breaks) {
+		while (pointer < breaks[currentBreak][0]) {
+			std::cout << "! ";
+			pointer++;
+		}
+		while (pointer < breaks[currentBreak][1]) {
+			std::cout << "_ ";
+			pointer++;
+		}
+		currentBreak++;
 	}
 	std::cout << std::endl;
 	for (auto task : solution[0]) {

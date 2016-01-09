@@ -10,7 +10,7 @@
 typedef std::vector<std::vector<float>> FeromoneTable;
 typedef std::vector<std::vector<int>> Solution, Tasks, Breaks;
 
-class Instance
+class ACO
 {
 private:
 	FeromoneTable feromone_table; //tablica dla 1 maszyny
@@ -24,9 +24,9 @@ private:
 	Ant *ants;
 
 public:
-	Instance();
-	Instance(int number_of_tasks, int number_of_ants);
-	~Instance();
+	ACO();
+	ACO(int number_of_tasks, int number_of_ants);
+	~ACO();
 
 	void generateTasks(int max, int min);
 	void generateBreaks();

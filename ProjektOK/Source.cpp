@@ -12,14 +12,15 @@ using namespace std;
 int main(){
 	srand(time(NULL));
 	int n = 50;
-	Instance *instance;
-	instance = new Instance(50, 20);
+	ACO *aco;
+	aco = new ACO(50, 20);
 
-	instance->generateTasks(100, 25);
-	instance->generateBreaks();
-	instance->printSolution(instance->generateRandomSolution());
+	aco->generateTasks(100, 25);
+	aco->generateBreaks();
+	aco->printSolution(aco->generateRandomSolution());
 
-	delete instance;
+	delete aco;
+
 	system("pause");
 	return 0;
 }
