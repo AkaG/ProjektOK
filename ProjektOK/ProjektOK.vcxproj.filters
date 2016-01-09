@@ -21,9 +21,15 @@
     <ClCompile Include="ACO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Ant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ACO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ant.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

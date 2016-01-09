@@ -13,7 +13,7 @@ int main(){
 	srand(time(NULL));
 	int n = 50;
 	Instance *instance;
-	instance = new Instance(50);
+	instance = new Instance(50, 20);
 
 	instance->generateTasks(100, 25);
 	instance->generateBreaks();

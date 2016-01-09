@@ -5,29 +5,33 @@ Instance::Instance()
 }
 
 
-Instance::Instance(int n)
+Instance::Instance(int number_of_tasks, int number_of_ants)
 {
-	this->number_of_tasks = n;
-	this->number_of_breaks = (rand() % (n / 2 - 2)) + 2;
+	this->number_of_tasks = number_of_tasks;
+	this->number_of_breaks = (rand() % (number_of_tasks / 2 - 2)) + 2;
+	this->number_of_ants = number_of_ants;
 
-	tasks.resize(number_of_tasks);
+	tasks.resize(this->number_of_tasks);
 	for (auto &i :tasks) {
 		i.resize( 2);
 	}
 
-	breaks.resize( number_of_breaks);
+	breaks.resize(this->number_of_breaks);
 	for (auto &i : breaks) {
 		i.resize( 2);
 	}
 
-	feromone_table.resize( number_of_tasks);
+	feromone_table.resize(this->number_of_tasks);
 	for (auto &i : feromone_table) {
-		i.resize( number_of_tasks);
+		i.resize(this->number_of_tasks);
 	}
+
+	ants = new Ant(number_of_ants);
 }
 
 Instance::~Instance()
 {
+	delete ants;
 }
 
 
@@ -60,7 +64,7 @@ void Instance::generateBreaks()
 	breaks[0][1] = breaks[0][0] + ((rand() % maxBreak) + minBreak);
 
 	for (int i = 1; i < number_of_breaks; i++){
-		breaks[i][0] = breaks[i - i][1] + ((rand() % (3 * max_task_length)) + min_task_length);
+		breaks[i][0] = breaks[i - 1][1] + ((rand() % (3 * max_task_length)) + min_task_length);
 		breaks[i][1] = breaks[i][0] + ((rand() % maxBreak) + minBreak);
 	}
 }
