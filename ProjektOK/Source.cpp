@@ -17,7 +17,10 @@ int main(){
 
 	aco->generateTasks(100, 25);
 	aco->generateBreaks();
-	aco->printSolution(aco->generateRandomSolution());
+	
+	Solution solution = aco->generateRandomSolution();
+	aco->printSolution(solution);
+	std::cout << aco->getSolutionLength(solution) << std::endl;
 
 	delete aco;
 

@@ -34,5 +34,7 @@ public:
 
 	std::vector<std::vector<int>> getSolution();
 	void printSolution(Solution solution);
+
+	int getSolutionLength(Solution solution);
 };
 

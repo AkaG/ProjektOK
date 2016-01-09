@@ -151,3 +151,25 @@ void ACO::printSolution(Solution solution)
 		std::cout << task << std::endl;
 	}
 }
+
+int ACO::getSolutionLength(Solution solution)
+{
+	int currentBreak = 0;
+	int pointer = 0;
+	for (auto task : solution[0]) {
+		if (currentBreak < number_of_breaks) {
+			if (tasks[task][0] >
+				(breaks[currentBreak][0] - pointer)) {
+				while (pointer < breaks[currentBreak][0]) {
+					pointer++;
+				}
+				while (pointer < breaks[currentBreak][1]) {
+					pointer++;
+				}
+				currentBreak++;
+			}
+		}
+		for (int i = pointer; pointer < tasks[task][0] + i; pointer++);
+	}
+	return pointer;
+}
