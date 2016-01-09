@@ -12,12 +12,17 @@ typedef std::vector<std::vector<int>> Solution, Tasks, Breaks;
 class Ant
 {
 private:
+	FeromoneTable *feromone_table;
+	Tasks tasks;
+	Breaks breaks;
+
 	int number_of_ants;
-	Solution solution;
+public:
+	void writeFeromoneToTable(Solution solution);
 
 public:
 	Ant();
-	Ant(int n);
+	Ant(int n, FeromoneTable &table, Tasks tasks, Breaks breaks);
 	~Ant();
 };
 

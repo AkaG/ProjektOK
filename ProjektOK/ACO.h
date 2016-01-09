@@ -12,6 +12,8 @@ typedef std::vector<std::vector<int>> Solution, Tasks, Breaks;
 
 class ACO
 {
+	friend class Ant;
+
 private:
 	FeromoneTable feromone_table; //tablica dla 1 maszyny
 	Tasks tasks; //tablica [n][2] z wylosowanymi czasami zadan dla maszyn
