@@ -26,7 +26,7 @@ ACO::ACO(int number_of_tasks, int number_of_ants)
 		i.resize(this->number_of_tasks);
 	}
 
-	ants = new Ant(number_of_ants);
+	ants = new Ant(number_of_ants, feromone_table, tasks, breaks);
 }
 
 ACO::~ACO()
@@ -113,7 +113,8 @@ std::vector<std::vector<int>> ACO::getSolution()
 void ACO::printSolution(Solution solution)
 {
 	std::cout << "First machine\n";
-	
+	ants->writeFeromoneToTable(solution);
+
 	int currentBreak = 0;
 	int pointer = 0;
 	for (auto task : solution[0]) {
