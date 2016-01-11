@@ -181,6 +181,7 @@ void ACO::loadFromFile(std::string name)
 			std::getline(ss, token, ';');
 			tasks[i][1] = atoi(token.c_str());
 			std::getline(ss, token, ';');
+			tasks[i][2] = atoi(token.c_str());
 		}
 
 		int i = 0;
