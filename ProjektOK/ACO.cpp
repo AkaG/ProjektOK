@@ -34,7 +34,7 @@ ACO::ACO(std::string fileName, int number_of_ants)
 	this->number_of_ants = number_of_ants;
 	this->loadFromFile(fileName);
 
-	ants = new Ants(number_of_ants, &feromone_table, tasks, breaks, number_of_tasks, number_of_breaks);
+	ants = new Ants(number_of_ants, &feromone_table, &tasks, &breaks, number_of_tasks, number_of_breaks);
 }
 
 ACO::~ACO()
@@ -175,6 +175,9 @@ void ACO::loadFromFile(std::string name)
 
 	file.open(name, std::ios::in);
 	if (file.is_open()) {
+
+		std::getline(file, input);
+
 		int count;
 		file >> count;
 		this->number_of_tasks = count;

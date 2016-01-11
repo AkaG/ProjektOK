@@ -22,7 +22,7 @@ int main(){
 	aco->printSolution(solution);
 	std::cout << aco->getSolutionLength(solution) << std::endl;
 
-	aco->loadFromFile("abc.txt");
+	aco->loadFromFile("Instance one");
 
 	delete aco;
 
