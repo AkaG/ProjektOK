@@ -13,8 +13,8 @@ class Ants
 {
 private:
 	FeromoneTable *feromone_table;
-	Tasks tasks;
-	Breaks breaks;
+	Tasks *tasks;
+	Breaks *breaks;
 	int number_of_tasks, number_of_breaks;
 
 	int number_of_ants;
@@ -25,7 +25,7 @@ public:
 
 public:
 	Ants();
-	Ants(int n, FeromoneTable *feromoneTable, Tasks tasks, Breaks breaks, int number_of_tasks, int number_of_breaks);
+	Ants(int n, FeromoneTable *feromoneTable, Tasks *tasks, Breaks *breaks, int number_of_tasks, int number_of_breaks);
 	~Ants();
 };
 
