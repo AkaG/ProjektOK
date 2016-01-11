@@ -13,12 +13,12 @@ ACO::ACO(int number_of_tasks, int number_of_ants)
 
 	tasks.resize(this->number_of_tasks);
 	for (auto &i :tasks) {
-		i.resize( 2);
+		i.resize(3);
 	}
 
 	breaks.resize(this->number_of_breaks);
 	for (auto &i : breaks) {
-		i.resize( 2);
+		i.resize(2);
 	}
 
 	feromone_table.resize(this->number_of_tasks);
@@ -26,7 +26,7 @@ ACO::ACO(int number_of_tasks, int number_of_ants)
 		i.resize(this->number_of_tasks);
 	}
 
-	ants = new Ant(number_of_ants, feromone_table, tasks, breaks);
+	ants = new Ants(number_of_ants, &feromone_table, tasks, breaks, number_of_tasks, number_of_breaks);
 }
 
 ACO::~ACO()
@@ -43,6 +43,7 @@ void ACO::generateTasks(int max, int min)
 	for (int i = 0; i < number_of_tasks; i++) {
 		tasks[i][0] = (rand() % (max_task_length - min_task_length)) + min_task_length;
 		tasks[i][1] = (rand() % (max_task_length - min_task_length)) + min_task_length;
+		tasks[i][2] = (rand() % (min_task_length*number_of_tasks + number_of_breaks * 50));
 	}
 }
 
@@ -105,14 +106,14 @@ Solution ACO::generateRandomSolution()
 }
 
 
-std::vector<std::vector<int>> ACO::getSolution()
+Solution ACO::getSolution()
 {
 	return solution;
 }
 
 void ACO::printSolution(Solution solution)
 {
-	std::cout << "First machine\n";
+	//std::cout << "First machine\n";
 	ants->writeFeromoneToTable(solution);
 
 	int currentBreak = 0;
@@ -122,27 +123,28 @@ void ACO::printSolution(Solution solution)
 			if (tasks[task][0] >
 				(breaks[currentBreak][0] - pointer)) {
 				while (pointer < breaks[currentBreak][0]) {
-					std::cout << "! ";
+					//std::cout << "! ";
 					pointer++;
 				}
 				while (pointer < breaks[currentBreak][1]) {
-					std::cout << "_ ";
+					//std::cout << "_ ";
 					pointer++;
 				}
 				currentBreak++;
 			}
 		}
 		for (int i = pointer; pointer < tasks[task][0] + i; pointer++) {
-			std::cout << task << " ";
+			//std::cout << task << " ";
 		}
 	}
+
 	while (currentBreak < number_of_breaks) {
 		while (pointer < breaks[currentBreak][0]) {
-			std::cout << "! ";
+			//std::cout << "! ";
 			pointer++;
 		}
 		while (pointer < breaks[currentBreak][1]) {
-			std::cout << "_ ";
+			//std::cout << "_ ";
 			pointer++;
 		}
 		currentBreak++;
@@ -155,28 +157,7 @@ void ACO::printSolution(Solution solution)
 
 int ACO::getSolutionLength(Solution solution)
 {
-	int currentBreak = 0;
-	int pointer = 0;
-	int secondMachinePointer = 0;
-	for (auto task : solution[0]) {
-		if (currentBreak < number_of_breaks) {
-			if (tasks[task][0] >
-				(breaks[currentBreak][0] - pointer)) {
-				while (pointer < breaks[currentBreak][0]) {
-					pointer++;
-				}
-				while (pointer < breaks[currentBreak][1]) {
-					pointer++;
-				}
-				currentBreak++;
-			}
-		}
-		for (int i = pointer; pointer < tasks[task][0] + i; pointer++);
-		if (task == 0)
-			secondMachinePointer = pointer;
-		for (int i = secondMachinePointer; secondMachinePointer < tasks[task][1] + i; secondMachinePointer++);
-	}
-	return secondMachinePointer;
+	return ants->getSolutionLength(solution);
 }
 
 void ACO::loadFromFile(std::string name)
