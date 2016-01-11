@@ -122,7 +122,7 @@ Solution ACO::getSolution()
 void ACO::printSolution(Solution solution)
 {
 	//std::cout << "First machine\n";
-	//ants->writeFeromoneToTable(solution);
+	ants->writeFeromoneToTable(solution);
 
 	int currentBreak = 0;
 	int pointer = 0;
@@ -166,6 +166,50 @@ void ACO::printSolution(Solution solution)
 int ACO::getSolutionLength(Solution solution)
 {
 	return ants->getSolutionLength(solution);
+}
+
+void ACO::feromoneEvaporation(float p)
+{
+	if (p < 0)
+		p = p*(-1);
+	if (p > 1)
+		p = 1 / p;
+
+	for (auto &i : feromone_table) {
+		for (auto &j : i) {
+			j = j*(1 - p);
+		}
+	}
+}
+
+void ACO::smoothingFeromoneTable()
+{
+	float min, max, avg;
+	min = 150;
+	max = 1;
+	avg = 0;
+
+	for (auto &i : feromone_table) {
+		for (auto &j : i) {
+			if (j != 0 && j < min)
+				min = j;
+			if (j > max)
+				max = j;
+		}
+	}
+
+	avg = min * max;
+
+	for (auto &i : feromone_table) {
+		for (auto &j : i) {
+			if (j <= avg) {
+				j = j + ((avg - min)*(min / avg));
+			}
+			else {
+				j = j - ((max - avg)*(avg / max));
+			}
+		}
+	}
 }
 
 void ACO::loadFromFile(std::string name)

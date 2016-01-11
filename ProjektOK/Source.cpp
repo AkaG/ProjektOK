@@ -22,6 +22,9 @@ int main(){
 	aco->printSolution(solution);
 	std::cout << aco->getSolutionLength(solution) << std::endl;
 
+	aco->feromoneEvaporation(5);
+	aco->smoothingFeromoneTable();
+
 	aco->loadFromFile("Instance one");
 
 	delete aco;
