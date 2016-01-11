@@ -1,9 +1,10 @@
 #pragma once
 #include <cstdlib>
-#include <cstdio>
 #include <ctime>
 #include <vector>
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 #include "Ant.h"
 
@@ -38,5 +39,8 @@ public:
 	void printSolution(Solution solution);
 
 	int getSolutionLength(Solution solution);
+
+	void loadFromFile(std::string name);
+
 };
 

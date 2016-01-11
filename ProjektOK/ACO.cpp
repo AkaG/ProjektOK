@@ -178,3 +178,53 @@ int ACO::getSolutionLength(Solution solution)
 	}
 	return secondMachinePointer;
 }
+
+void ACO::loadFromFile(std::string name)
+{
+	std::fstream file;
+	std::string input;
+
+	file.open(name, std::ios::in);
+	if (file.is_open()) {
+		int count;
+		file >> count;
+		std::getline(file, input);
+
+		for (int i = 0; i < count; i++) {
+			std::getline(file, input);
+			std::istringstream ss(input);
+			std::string token;
+
+			std::getline(ss, token, ';');
+			tasks[i][0] = atoi(token.c_str());
+			std::getline(ss, token, ';');
+			tasks[i][1] = atoi(token.c_str());
+			std::getline(ss, token, ';');
+		}
+
+		int i = 0;
+
+		while (std::getline(file, input)) {
+			std::istringstream ss(input);
+			std::string token;
+
+			breaks.resize(i + 1);
+			breaks[i].resize(2);
+
+			std::getline(ss, token, ';');
+
+			std::getline(ss, token, ';');
+			breaks[i][1] = atoi(token.c_str());
+			std::getline(ss, token, ';');
+			breaks[i][0] = atoi(token.c_str());
+			breaks[i][1] += breaks[i][0];
+			
+			i++;
+		}
+	}
+	else {
+		std::cout << "Nie odnaleziono pliku" << "\n";
+	}
+
+	file.close();
+}
