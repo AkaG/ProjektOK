@@ -29,6 +29,14 @@ ACO::ACO(int number_of_tasks, int number_of_ants)
 	ants = new Ants(number_of_ants, &feromone_table, tasks, breaks, number_of_tasks, number_of_breaks);
 }
 
+ACO::ACO(std::string fileName, int number_of_ants)
+{
+	this->number_of_ants = number_of_ants;
+	this->loadFromFile(fileName);
+
+	ants = new Ants(number_of_ants, &feromone_table, tasks, breaks, number_of_tasks, number_of_breaks);
+}
+
 ACO::~ACO()
 {
 	delete ants;
@@ -114,7 +122,7 @@ Solution ACO::getSolution()
 void ACO::printSolution(Solution solution)
 {
 	//std::cout << "First machine\n";
-	ants->writeFeromoneToTable(solution);
+	//ants->writeFeromoneToTable(solution);
 
 	int currentBreak = 0;
 	int pointer = 0;

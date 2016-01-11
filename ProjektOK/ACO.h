@@ -30,6 +30,7 @@ private:
 public:
 	ACO();
 	ACO(int number_of_tasks, int number_of_ants);
+	ACO(std::string fileName, int number_of_ants);
 	~ACO();
 
 	void generateTasks(int max, int min);
