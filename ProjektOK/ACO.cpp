@@ -169,6 +169,18 @@ void ACO::loadFromFile(std::string name)
 	if (file.is_open()) {
 		int count;
 		file >> count;
+		this->number_of_tasks = count;
+
+		tasks.resize(count);
+		for (auto &i : tasks) {
+			i.resize(3);
+		}
+
+		feromone_table.resize(count);
+		for (auto &i : feromone_table) {
+			i.resize(count);
+		}
+
 		std::getline(file, input);
 
 		for (int i = 0; i < count; i++) {
@@ -203,6 +215,7 @@ void ACO::loadFromFile(std::string name)
 			
 			i++;
 		}
+		this->number_of_breaks = i;
 	}
 	else {
 		std::cout << "Nie odnaleziono pliku" << "\n";

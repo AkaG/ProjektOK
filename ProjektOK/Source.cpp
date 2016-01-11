@@ -19,7 +19,7 @@ int main(){
 	aco->generateBreaks();
 	
 	Solution solution = aco->generateRandomSolution();
-	//aco->printSolution(solution);
+	aco->printSolution(solution);
 	std::cout << aco->getSolutionLength(solution) << std::endl;
 
 	aco->loadFromFile("abc.txt");
