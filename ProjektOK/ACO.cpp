@@ -29,6 +29,14 @@ ACO::ACO(int number_of_tasks, int number_of_ants)
 	ants = new Ants(number_of_ants, &feromone_table, &tasks, &breaks, number_of_tasks, number_of_breaks);
 }
 
+ACO::ACO(std::string fileName, int number_of_ants)
+{
+	this->number_of_ants = number_of_ants;
+	this->loadFromFile(fileName);
+
+	ants = new Ants(number_of_ants, &feromone_table, &tasks, &breaks, number_of_tasks, number_of_breaks);
+}
+
 ACO::~ACO()
 {
 	delete ants;
@@ -160,6 +168,50 @@ int ACO::getSolutionLength(Solution solution)
 	return ants->getSolutionLength(solution);
 }
 
+void ACO::feromoneEvaporation(float p)
+{
+	if (p < 0)
+		p = p*(-1);
+	if (p > 1)
+		p = 1 / p;
+
+	for (auto &i : feromone_table) {
+		for (auto &j : i) {
+			j = j*(1 - p);
+		}
+	}
+}
+
+void ACO::smoothingFeromoneTable()
+{
+	float min, max, avg;
+	min = 150;
+	max = 1;
+	avg = 0;
+
+	for (auto &i : feromone_table) {
+		for (auto &j : i) {
+			if (j != 0 && j < min)
+				min = j;
+			if (j > max)
+				max = j;
+		}
+	}
+
+	avg = min * max;
+
+	for (auto &i : feromone_table) {
+		for (auto &j : i) {
+			if (j <= avg) {
+				j = j + ((avg - min)*(min / avg));
+			}
+			else {
+				j = j - ((max - avg)*(avg / max));
+			}
+		}
+	}
+}
+
 void ACO::loadFromFile(std::string name)
 {
 	std::fstream file;
@@ -167,6 +219,9 @@ void ACO::loadFromFile(std::string name)
 
 	file.open(name, std::ios::in);
 	if (file.is_open()) {
+
+		std::getline(file, input);
+
 		int count;
 		file >> count;
 		this->number_of_tasks = count;
