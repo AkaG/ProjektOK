@@ -2,6 +2,34 @@
 
 
 
+bool Ants::isItUsingTable(int turn)
+{
+	int i = turn; //tutaj wstawic rownanie na prawdopodobienstwo w %
+
+	if ((rand() % 99) + 1 < i)
+		return true;
+	else
+		return false;
+}
+
+void Ants::addNextElenemtToSolution(bool useTable, Solution tmp, std::vector<bool> alreadyUsed)
+{
+	std::vector<int> nextPossible;
+	int last = (tmp.back())[0];
+	int i = 0;
+	int mod = 0;
+	for (auto it : feromone_table[last][0]) {
+		if (alreadyUsed[i] == false && it != (float)0) {
+			nextPossible.push_back(i);
+			mod += it * 10;
+		}
+		i++;
+	}
+
+	int choosenOne = rand() % mod;
+	
+}
+
 void Ants::writeFeromoneToTable(Solution solution)
 {
 	auto prev = solution[0][0];
@@ -30,9 +58,8 @@ Ants::Ants()
 {
 }
 
-Ants::Ants(int n, FeromoneTable *table, Tasks *tasks, Breaks *breaks, int number_of_tasks, int number_of_breaks)
+Ants::Ants(FeromoneTable *table, Tasks *tasks, Breaks *breaks, int number_of_tasks, int number_of_breaks)
 {
-	number_of_ants = n;
 	feromone_table = table;
 	this->tasks = tasks;
 	this->breaks = breaks;

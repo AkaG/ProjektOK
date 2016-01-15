@@ -26,7 +26,7 @@ ACO::ACO(int number_of_tasks, int number_of_ants)
 		i.resize(this->number_of_tasks);
 	}
 
-	ants = new Ants(number_of_ants, &feromone_table, &tasks, &breaks, number_of_tasks, number_of_breaks);
+	ants = new Ants(&feromone_table, &tasks, &breaks, number_of_tasks, number_of_breaks);
 }
 
 ACO::ACO(std::string fileName, int number_of_ants)
@@ -34,7 +34,7 @@ ACO::ACO(std::string fileName, int number_of_ants)
 	this->number_of_ants = number_of_ants;
 	this->loadFromFile(fileName);
 
-	ants = new Ants(number_of_ants, &feromone_table, &tasks, &breaks, number_of_tasks, number_of_breaks);
+	ants = new Ants(&feromone_table, &tasks, &breaks, number_of_tasks, number_of_breaks);
 }
 
 ACO::~ACO()

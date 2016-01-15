@@ -17,7 +17,8 @@ private:
 	Breaks *breaks;
 	int number_of_tasks, number_of_breaks;
 
-	int number_of_ants;
+	bool isItUsingTable(int turn);
+	void addNextElenemtToSolution(bool useTable, Solution tmp, std::vector<bool> alreadyUsed);
 
 public:
 	void writeFeromoneToTable(Solution solution);
@@ -25,7 +26,7 @@ public:
 
 public:
 	Ants();
-	Ants(int n, FeromoneTable *feromoneTable, Tasks *tasks, Breaks *breaks, int number_of_tasks, int number_of_breaks);
+	Ants(FeromoneTable *feromoneTable, Tasks *tasks, Breaks *breaks, int number_of_tasks, int number_of_breaks);
 	~Ants();
 };
 
