@@ -30,6 +30,56 @@ void Ants::addNextElenemtToSolution(bool useTable, Solution tmp, std::vector<boo
 	
 }
 
+void Ants::jumpToReadyTime(int task, int * pointer, int * currentBreak)
+{
+	if ((*pointer) < (*tasks)[task][2])
+		return;
+	else if (*currentBreak < number_of_breaks) {
+		while (((*currentBreak) < (number_of_breaks - 1)) &&
+			((*tasks)[task][2] > (*breaks)[(*currentBreak)][1])) {
+			(*currentBreak)++;
+		}
+		if ((*tasks)[task][2] < (*breaks)[(*currentBreak)][0])
+			(*pointer) = (*tasks)[task][2];
+		else if ((*tasks)[task][2] < (*breaks)[(*currentBreak)][1])
+			(*pointer) = (*tasks)[task][2];
+		else {
+			(*pointer) = (*tasks)[task][2];
+			(*currentBreak)++;
+		}
+	} else {
+		*pointer = (*tasks)[task][2];
+	}
+}
+
+void Ants::findPlaceInBreaks(int task, int * pointer, int * currentBreak)
+{
+	if (*currentBreak < number_of_breaks) {
+		while (((*currentBreak) < number_of_breaks) &&
+			((*tasks)[task][0] >
+			((*breaks)[*currentBreak][0] - (*pointer)))) {
+
+			(*pointer) = (*breaks)[(*currentBreak)][1];
+			(*currentBreak)++;
+		}
+	}
+	else {
+		return;
+	}
+}
+
+void Ants::putInFirstMachine(int task, int * pointer)
+{
+	for (int i = *pointer; *pointer < (*tasks)[task][0] + i; (*pointer)++);
+}
+
+void Ants::putInSecondMachine(int task, int * pointer, int *secondMachinePointer)
+{
+	if (task == 0)
+		(*secondMachinePointer) = (*pointer);
+	for (int i = (*secondMachinePointer); (*secondMachinePointer) < (*tasks)[task][1] + i; ((*secondMachinePointer))++); 
+}
+
 void Ants::writeFeromoneToTable(Solution solution)
 {
 	auto prev = solution[0][0];
@@ -41,7 +91,7 @@ void Ants::writeFeromoneToTable(Solution solution)
 
 	for (auto &i : solution[0]) {
 		if (i != prev) {
-			(*feromone_table)[prev][i] += 1.f/solutionLength;
+			(*feromone_table)[prev][i] += 1.f / solutionLength;
 			prev = i;
 		}
 	}
@@ -73,29 +123,17 @@ Ants::~Ants()
 
 int Ants::getSolutionLength(Solution solution)
 {
-	std::cout << "First task 1st machine: " << solution[0][0] << std::endl;
-	std::cout << "First task 2nd machine: " << solution[1][0] << std::endl;
-
 	int currentBreak = 0;
 	int pointer = 0;
 	int secondMachinePointer = 0;
 	for (auto task : solution[0]) {
-		if (currentBreak < number_of_breaks) {
-			if ((*tasks)[task][0] >
-				((*breaks)[currentBreak][0] - pointer)) {
-				while (pointer < (*breaks)[currentBreak][0]) {
-					pointer++;
-				}
-				while (pointer < (*breaks)[currentBreak][1]) {
-					pointer++;
-				}
-				currentBreak++;
-			}
-		}
-		for (int i = pointer; pointer < (*tasks)[task][0] + i; pointer++);
-		if (task == 0)
-			secondMachinePointer = pointer;
-		for (int i = secondMachinePointer; secondMachinePointer < (*tasks)[task][1] + i; secondMachinePointer++);
+		jumpToReadyTime(task, &pointer, &currentBreak);
+
+		findPlaceInBreaks(task, &pointer, &currentBreak);
+
+		putInFirstMachine(task, &pointer);
+
+		putInSecondMachine(task, &pointer, &secondMachinePointer);
 	}
 	return secondMachinePointer;
 }

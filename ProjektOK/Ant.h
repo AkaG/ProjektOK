@@ -20,6 +20,10 @@ private:
 	bool isItUsingTable(int turn);
 	void addNextElenemtToSolution(bool useTable, Solution tmp, std::vector<bool> alreadyUsed);
 
+	void jumpToReadyTime(int task, int *pointer, int *currentBreak);
+	void findPlaceInBreaks(int task, int *pointer, int *currentBreak);
+	void putInFirstMachine(int task, int *pointer);
+	void putInSecondMachine(int task, int *pointer, int *secondMachinePointer);
 public:
 	void writeFeromoneToTable(Solution solution);
 	int getSolutionLength(Solution solution);
