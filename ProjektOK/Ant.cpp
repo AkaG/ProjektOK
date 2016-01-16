@@ -21,7 +21,7 @@ void Ants::addNextElenemtToSolution(bool useTable, Solution &tmp, std::vector<bo
 	for (auto it : (*feromone_table)[last]) {
 		if (alreadyUsed[i] == false && it != (float)0) {
 			nextPossible.push_back(i);
-			mod += it * 10;
+			mod += (int)it * 10;
 		}
 		i++;
 	}
