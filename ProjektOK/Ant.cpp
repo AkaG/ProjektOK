@@ -21,7 +21,7 @@ void Ants::addNextElenemtToSolution(bool useTable, Solution tmp, std::vector<boo
 	for (auto it : feromone_table[last][0]) {
 		if (alreadyUsed[i] == false && it != (float)0) {
 			nextPossible.push_back(i);
-			mod += it * 10;
+			mod += (int)it * 10;
 		}
 		i++;
 	}
@@ -75,7 +75,7 @@ void Ants::putInFirstMachine(int task, int * pointer)
 
 void Ants::putInSecondMachine(int task, int * pointer, int *secondMachinePointer)
 {
-	if (task == 0)
+	if ((*secondMachinePointer) < (*pointer))
 		(*secondMachinePointer) = (*pointer);
 	for (int i = (*secondMachinePointer); (*secondMachinePointer) < (*tasks)[task][1] + i; ((*secondMachinePointer))++); 
 }
@@ -84,7 +84,7 @@ void Ants::writeFeromoneToTable(Solution solution)
 {
 	auto prev = solution[0][0];
 
-	float solutionLength = getSolutionLength(solution);
+	float solutionLength = (float)getSolutionLength(solution);
 
 	std::cout << "Solution Length: " << solutionLength << "\n";
 
