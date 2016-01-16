@@ -175,38 +175,39 @@ void ACO::feromoneEvaporation(float p)
 	if (p > 1)
 		p = 1 / p;
 
-	for (auto &i : feromone_table) {
-		for (auto &j : i) {
-			j = j*(1 - p);
+	for (auto &row : feromone_table) {
+		for (auto &element : row) {
+			element = (int)((float)element*(1 - p));
 		}
 	}
 }
 
 void ACO::smoothingFeromoneTable()
 {
-	float min, max, avg;
-	min = 150;
-	max = 1;
-	avg = 0;
+	int min, max;
+	float middleValue;
+	min = feromone_table[0][0];
+	max = feromone_table[0][0];
+	middleValue = 0;
 
-	for (auto &i : feromone_table) {
-		for (auto &j : i) {
-			if (j != 0 && j < min)
-				min = j;
-			if (j > max)
-				max = j;
+	for (auto &row : feromone_table) {
+		for (auto &element : row) {
+			if (element != 0 && element < min)
+				min = element;
+			if (element > max)
+				max = element;
 		}
 	}
 
-	avg = min * max;
+	middleValue = ((float)(min + max)/2);
 
-	for (auto &i : feromone_table) {
-		for (auto &j : i) {
-			if (j <= avg) {
-				j = j + ((avg - min)*(min / avg));
+	for (auto &row : feromone_table) {
+		for (auto &element : row) {
+			if (element <= middleValue) {
+				element = element + ((middleValue - min)*((float)min / middleValue));
 			}
 			else {
-				j = j - ((max - avg)*(avg / max));
+				element = element - ((max - middleValue)*(middleValue / max));
 			}
 		}
 	}
@@ -267,7 +268,7 @@ void ACO::loadFromFile(std::string name)
 			std::getline(ss, token, ';');
 			breaks[i][0] = atoi(token.c_str());
 			breaks[i][1] += breaks[i][0];
-			
+
 			i++;
 		}
 		this->number_of_breaks = i;

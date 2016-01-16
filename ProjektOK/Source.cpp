@@ -10,7 +10,7 @@ using namespace std;
 // Super projekt na OK (´◉◞౪◟◉)
 
 int main(){
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 	int n = 50;
 	ACO *aco;
 	aco = new ACO(50, 20);

@@ -101,26 +101,19 @@ void Ants::putInSecondMachine(int task, int * pointer, int *secondMachinePointer
 
 void Ants::writeFeromoneToTable(Solution solution)
 {
-	auto prev = solution[0][0];
+	auto previousOperation = solution[0][0];
 
-	float solutionLength = (float)getSolutionLength(solution);
+	int solutionLength = getSolutionLength(solution);
 
 	std::cout << "Solution Length: " << solutionLength << "\n";
 
+	for (auto &operation : solution[0]) {
+		if (operation != previousOperation) {
+			(*feromone_table)[previousOperation][operation] += sumOfTasksAndBreaks - solutionLength;
+			previousOperation = operation;
+		}
+	}
 
-	for (auto &i : solution[0]) {
-		if (i != prev) {
-			(*feromone_table)[prev][i] += 1.f / solutionLength;
-			prev = i;
-		}
-	}
-	for (auto i : (*feromone_table)) {
-		for (auto j : i) {
-			//std::cout << j << "\t|\t";
-		}
-		//std::cout << std::endl;
-	}
-	//std::cout << std::endl;
 }
 
 Ants::Ants()
@@ -134,6 +127,12 @@ Ants::Ants(FeromoneTable *table, Tasks *tasks, Breaks *breaks, int number_of_tas
 	this->breaks = breaks;
 	this->number_of_breaks = number_of_breaks;
 	this->number_of_tasks = number_of_tasks;
+
+	this->sumOfTasksAndBreaks = 0;
+	for (auto element : (*tasks)[0]) {
+		sumOfTasksAndBreaks += element;
+	}
+	sumOfTasksAndBreaks += (*breaks)[number_of_breaks - 1][1];
 }
 
 Ants::~Ants()

@@ -6,7 +6,7 @@
 #include <vector>
 #include <iostream>
 
-typedef std::vector<std::vector<float>> FeromoneTable;
+typedef std::vector<std::vector<int>> FeromoneTable;
 typedef std::vector<std::vector<int>> Solution, Tasks, Breaks;
 
 class Ants
@@ -15,6 +15,7 @@ private:
 	FeromoneTable *feromone_table;
 	Tasks *tasks;
 	Breaks *breaks;
+	int sumOfTasksAndBreaks;
 	int number_of_tasks, number_of_breaks;
 
 	bool isItUsingTable(int turn);
