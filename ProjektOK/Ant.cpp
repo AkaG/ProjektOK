@@ -12,22 +12,41 @@ bool Ants::isItUsingTable(int turn)
 		return false;
 }
 
-void Ants::addNextElenemtToSolution(bool useTable, Solution tmp, std::vector<bool> alreadyUsed)
+void Ants::addNextElenemtToSolution(bool useTable, Solution &tmp, std::vector<bool> alreadyUsed)
 {
 	std::vector<int> nextPossible;
 	int last = (tmp.back())[0];
 	int i = 0;
 	int mod = 0;
-	for (auto it : feromone_table[last][0]) {
+	for (auto it : (*feromone_table)[last]) {
 		if (alreadyUsed[i] == false && it != (float)0) {
 			nextPossible.push_back(i);
-			mod += (int)it * 10;
+			mod += it * 10;
 		}
 		i++;
 	}
 
 	int choosenOne = rand() % mod;
 	
+	float sum = 0;
+
+	for (auto it : nextPossible) {
+		if (choosenOne >= sum && choosenOne < sum + (*feromone_table)[last][it]) {
+			alreadyUsed[it] = true;
+			std::vector<int> vect;
+			vect.push_back(it);
+			vect.push_back(it);
+			tmp.push_back(vect);
+			return;
+		}
+		sum += (*feromone_table)[last][it];
+	}
+	
+}
+
+void Ants::generateFinalSolution()
+{
+
 }
 
 void Ants::jumpToReadyTime(int task, int * pointer, int * currentBreak)

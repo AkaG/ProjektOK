@@ -18,7 +18,8 @@ private:
 	int number_of_tasks, number_of_breaks;
 
 	bool isItUsingTable(int turn);
-	void addNextElenemtToSolution(bool useTable, Solution tmp, std::vector<bool> alreadyUsed);
+	void addNextElenemtToSolution(bool useTable, Solution &tmp, std::vector<bool> alreadyUsed);
+	void generateFinalSolution();
 
 	void jumpToReadyTime(int task, int *pointer, int *currentBreak);
 	void findPlaceInBreaks(int task, int *pointer, int *currentBreak);
