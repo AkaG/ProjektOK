@@ -6,6 +6,8 @@
 #include <vector>
 #include <iostream>
 
+#include "Parameters.h"
+
 typedef std::vector<std::vector<int>> FeromoneTable;
 typedef std::vector<std::vector<int>> Solution, Tasks, Breaks;
 
@@ -17,10 +19,12 @@ private:
 	Breaks *breaks;
 	int sumOfTasksAndBreaks;
 	int number_of_tasks, number_of_breaks;
+	int number_of_ants;
 
 	bool isItUsingTable(int turn);
-	void addNextElenemtToSolution(bool useTable, Solution &tmp, std::vector<bool> alreadyUsed);
-	void generateFinalSolution();
+	void pickNextElenemtForSolution(bool useTable, Solution &tmp, std::vector<int> unasignedTasks);
+	Solution shortestSolution(std::vector<Solution> solutionTable);
+	Solution generateFinalSolution();
 
 	void jumpToReadyTime(int task, int *pointer, int *currentBreak);
 	void findPlaceInBreaks(int task, int *pointer, int *currentBreak);
@@ -32,7 +36,7 @@ public:
 
 public:
 	Ants();
-	Ants(FeromoneTable *feromoneTable, Tasks *tasks, Breaks *breaks, int number_of_tasks, int number_of_breaks);
+	Ants(FeromoneTable *feromoneTable, Tasks *tasks, Breaks *breaks, int number_of_tasks, int number_of_breaks, int number_of_ants);
 	~Ants();
 };
 

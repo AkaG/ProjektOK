@@ -13,16 +13,16 @@ int main(){
 	srand((unsigned int)time(NULL));
 	int n = 50;
 	ACO *aco;
-	aco = new ACO(50, 20);
+	aco = new ACO(Parameters::Tasks::NUMBER, Parameters::Ants::NUMBER);
 
-	aco->generateTasks(100, 25);
+	aco->generateTasks(Parameters::Tasks::Length::MAX, Parameters::Tasks::Length::MIN);
 	aco->generateBreaks();
 	
 	Solution solution = aco->generateRandomSolution();
 	aco->printSolution(solution);
 	std::cout << aco->getSolutionLength(solution) << std::endl;
 
-	aco->feromoneEvaporation(5);
+	aco->feromoneEvaporation(Parameters::Feromone_Table::VAPORING);
 	aco->smoothingFeromoneTable();
 
 	aco->loadFromFile("Instance one");

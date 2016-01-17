@@ -43,6 +43,7 @@ public:
 	int getSolutionLength(Solution solution);
 
 	void feromoneEvaporation(float p);
+
 	void smoothingFeromoneTable();
 	
 	void loadFromFile(std::string name);

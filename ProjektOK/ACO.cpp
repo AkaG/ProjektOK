@@ -26,6 +26,12 @@ ACO::ACO(int number_of_tasks, int number_of_ants)
 		i.resize(this->number_of_tasks);
 	}
 
+	for (auto &row : feromone_table) {
+		for (auto &element : row) {
+			element = Parameters::Feromone_Table::INITIAL_VALUE;
+		}
+	}
+
 	ants = new Ants(&feromone_table, &tasks, &breaks, number_of_tasks, number_of_breaks);
 }
 
@@ -185,10 +191,10 @@ void ACO::feromoneEvaporation(float p)
 void ACO::smoothingFeromoneTable()
 {
 	int min, max;
-	float middleValue;
+	float midValue;
 	min = feromone_table[0][0];
 	max = feromone_table[0][0];
-	middleValue = 0;
+	midValue = 0;
 
 	for (auto &row : feromone_table) {
 		for (auto &element : row) {
@@ -199,15 +205,18 @@ void ACO::smoothingFeromoneTable()
 		}
 	}
 
-	middleValue = ((float)(min + max)/2);
+	midValue = ((float)(min + max)/2);
+
+	int upDelta = (int)(((midValue - min)*((float)min / midValue)));
+	int downDelta = (int)(((max - midValue)*(midValue / max)));
 
 	for (auto &row : feromone_table) {
 		for (auto &element : row) {
-			if (element <= middleValue) {
-				element = element + ((middleValue - min)*((float)min / middleValue));
+			if (element <= midValue) {
+				element = element + upDelta;
 			}
 			else {
-				element = element - ((max - middleValue)*(middleValue / max));
+				element = element - downDelta;
 			}
 		}
 	}

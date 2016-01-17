@@ -4,49 +4,48 @@
 
 bool Ants::isItUsingTable(int turn)
 {
-	int i = turn; //tutaj wstawic rownanie na prawdopodobienstwo w %
+	float c = (float)Parameters::Ants::TABLE_PROBABILITY;
+	int i = c/((float)turn + c/100); //tutaj wstawic rownanie na prawdopodobienstwo w %
 
 	if ((rand() % 99) + 1 < i)
-		return true;
-	else
 		return false;
+	else
+		return true;
 }
 
-void Ants::addNextElenemtToSolution(bool useTable, Solution &tmp, std::vector<bool> alreadyUsed)
+int Ants::pickNextElenemtForSolution(bool useTable, int previousTask, std::vector<int> unasignedTasks)
 {
-	std::vector<int> nextPossible;
-	int last = (tmp.back())[0];
-	int i = 0;
-	int mod = 0;
-	for (auto it : (*feromone_table)[last]) {
-		if (alreadyUsed[i] == false && it != (float)0) {
-			nextPossible.push_back(i);
-			mod += (int)it * 10;
-		}
-		i++;
-	}
-
-	int choosenOne = rand() % mod;
+	int sumOfAll = 0;
 	
-	float sum = 0;
-
-	for (auto it : nextPossible) {
-		if (choosenOne >= sum && choosenOne < sum + (*feromone_table)[last][it]) {
-			alreadyUsed[it] = true;
-			std::vector<int> vect;
-			vect.push_back(it);
-			vect.push_back(it);
-			tmp.push_back(vect);
-			return;
-		}
-		sum += (*feromone_table)[last][it];
-	}
-	
+	if (!useTable)
+		;
 }
 
-void Ants::generateFinalSolution()
+Solution Ants::shortestSolution(std::vector<Solution> solutionTable)
 {
+	Solution retVal = solutionTable[0];
 
+	int minTime = getSolutionLength(solutionTable[0]);
+	for (auto solution : solutionTable) {
+		int testedSolutionLength = getSolutionLength(solution);
+		if (minTime > testedSolutionLength) {
+			retVal = solution;
+			minTime = testedSolutionLength;
+		}
+	}
+
+	return retVal;
+}
+
+Solution Ants::generateFinalSolution()
+{
+	std::vector<Solution> solutionTable;
+	
+	generateSolutionTable(&solutionTable);
+
+	wrtieSolutionTableToFeromoneTable(solutionTable);
+
+	return shortestSolution(solutionTable);
 }
 
 void Ants::jumpToReadyTime(int task, int * pointer, int * currentBreak)
@@ -120,13 +119,14 @@ Ants::Ants()
 {
 }
 
-Ants::Ants(FeromoneTable *table, Tasks *tasks, Breaks *breaks, int number_of_tasks, int number_of_breaks)
+Ants::Ants(FeromoneTable *table, Tasks *tasks, Breaks *breaks, int number_of_tasks, int number_of_breaks, int number_of_ants)
 {
 	feromone_table = table;
 	this->tasks = tasks;
 	this->breaks = breaks;
 	this->number_of_breaks = number_of_breaks;
 	this->number_of_tasks = number_of_tasks;
+	this->number_of_ants = number_of_ants;
 
 	this->sumOfTasksAndBreaks = 0;
 	for (auto element : (*tasks)[0]) {
