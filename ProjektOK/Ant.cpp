@@ -13,12 +13,83 @@ bool Ants::isItUsingTable(int turn)
 		return true;
 }
 
-int Ants::pickNextElenemtForSolution(bool useTable, int previousTask, std::vector<int> unasignedTasks)
+Solution Ants::generateSingleSolution(int turn)
 {
-	int sumOfAll = 0;
+	Solution retVal;
+	std::vector<bool> unasignedTasks;
+
+	for (int i = 0; i < number_of_tasks; i++) {
+		unasignedTasks.push_back(true);
+	}
 	
-	if (!useTable)
-		;
+	retVal.resize(number_of_tasks);
+	for (auto &row : retVal)
+		row.resize(2);
+	int randomVal = rand() % number_of_tasks; 
+	retVal[0][0] = randomVal;
+	unasignedTasks[randomVal] = false;
+
+	for (int i = 1; i < number_of_tasks; i++) {
+		retVal[i][0] = pickNextElenemtForSolution(isItUsingTable(turn), retVal[i - 1][0], unasignedTasks);
+		unasignedTasks[retVal[i][0]] = false;
+	}
+	return retVal;
+}
+
+void Ants::generateSolutionTable(std::vector<Solution> * solutionTable, int turn)
+{
+	for (int i = 0; i < number_of_ants; i++) {
+		solutionTable->push_back(generateSingleSolution(turn));
+	}
+}
+
+void Ants::writeSolutionTableToFeromoneTable(std::vector<Solution> solutionTable)
+{
+	for (auto solution : solutionTable) {
+		writeFeromoneToTable(solution);
+	}
+}
+
+int Ants::pickNextElenemtForSolution(bool useTable, int previousTask, std::vector<bool> &unasignedTasks)
+{
+	int retVal;
+
+	if (!useTable) {
+		int ball = rand() % number_of_tasks;
+		int i = -1;
+		while (!unasignedTasks[++i]);
+		while (ball > 0) {
+			if (unasignedTasks[i]) {
+			
+				ball--;
+			}
+			i++;
+			if (i >= number_of_tasks)
+				i = 0;
+		}
+		retVal = i;
+	}
+	else {
+		int sumOfAll = 0;
+		int i = -1;
+		for (auto feromone : (*feromone_table)[previousTask]) {
+			if (unasignedTasks[++i])
+				sumOfAll += feromone;
+		}
+		int ball = rand() % sumOfAll;
+		i = -1;
+		while (!unasignedTasks[++i]);
+
+		while (ball > 0) {
+			if (unasignedTasks[i])
+				ball -= (*feromone_table)[previousTask][i];
+			i++;
+			if (i > number_of_tasks)
+				i = 0;
+		}
+		retVal = i;
+	}
+	return retVal;
 }
 
 Solution Ants::shortestSolution(std::vector<Solution> solutionTable)
@@ -37,13 +108,13 @@ Solution Ants::shortestSolution(std::vector<Solution> solutionTable)
 	return retVal;
 }
 
-Solution Ants::generateFinalSolution()
+Solution Ants::generateFinalSolution(int turn)
 {
 	std::vector<Solution> solutionTable;
-	
-	generateSolutionTable(&solutionTable);
 
-	wrtieSolutionTableToFeromoneTable(solutionTable);
+	generateSolutionTable(&solutionTable, turn);
+
+	writeSolutionTableToFeromoneTable(solutionTable);
 
 	return shortestSolution(solutionTable);
 }
@@ -65,7 +136,8 @@ void Ants::jumpToReadyTime(int task, int * pointer, int * currentBreak)
 			(*pointer) = (*tasks)[task][2];
 			(*currentBreak)++;
 		}
-	} else {
+	}
+	else {
 		*pointer = (*tasks)[task][2];
 	}
 }
@@ -75,7 +147,7 @@ void Ants::findPlaceInBreaks(int task, int * pointer, int * currentBreak)
 	if (*currentBreak < number_of_breaks) {
 		while (((*currentBreak) < number_of_breaks) &&
 			((*tasks)[task][0] >
-			((*breaks)[*currentBreak][0] - (*pointer)))) {
+				((*breaks)[*currentBreak][0] - (*pointer)))) {
 
 			(*pointer) = (*breaks)[(*currentBreak)][1];
 			(*currentBreak)++;
@@ -95,7 +167,7 @@ void Ants::putInSecondMachine(int task, int * pointer, int *secondMachinePointer
 {
 	if ((*secondMachinePointer) < (*pointer))
 		(*secondMachinePointer) = (*pointer);
-	for (int i = (*secondMachinePointer); (*secondMachinePointer) < (*tasks)[task][1] + i; ((*secondMachinePointer))++); 
+	for (int i = (*secondMachinePointer); (*secondMachinePointer) < (*tasks)[task][1] + i; ((*secondMachinePointer))++);
 }
 
 void Ants::writeFeromoneToTable(Solution solution)

@@ -20,7 +20,7 @@ int main(){
 	
 	Solution solution = aco->generateRandomSolution();
 	aco->printSolution(solution);
-	std::cout << aco->getSolutionLength(solution) << std::endl;
+	std::cout << std::endl << aco->getSolutionLength(solution) << std::endl;
 
 	aco->feromoneEvaporation(Parameters::Feromone_Table::VAPORING);
 	aco->smoothingFeromoneTable();

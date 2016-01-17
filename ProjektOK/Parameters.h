@@ -7,7 +7,7 @@ namespace Parameters {
 	}
 
 	namespace Ants {
-		const int		NUMBER				= 50;
+		const int		NUMBER				= 25;
 		const float		TABLE_PROBABILITY	= 1000; // im wiêcej tym d³u¿ej random ma wiêksze szanse
 	}
 

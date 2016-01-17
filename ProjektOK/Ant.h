@@ -22,9 +22,11 @@ private:
 	int number_of_ants;
 
 	bool isItUsingTable(int turn);
-	void pickNextElenemtForSolution(bool useTable, Solution &tmp, std::vector<int> unasignedTasks);
+	Solution generateSingleSolution(int turn);
+	int pickNextElenemtForSolution(bool useTable, int previousTask, std::vector<bool> &unasignedTasks);
+	void generateSolutionTable(std::vector<Solution> *solutionTable, int turn);
+	void writeSolutionTableToFeromoneTable(std::vector<Solution> solutionTable);
 	Solution shortestSolution(std::vector<Solution> solutionTable);
-	Solution generateFinalSolution();
 
 	void jumpToReadyTime(int task, int *pointer, int *currentBreak);
 	void findPlaceInBreaks(int task, int *pointer, int *currentBreak);
@@ -36,6 +38,7 @@ public:
 
 public:
 	Ants();
+	Solution generateFinalSolution(int turn);
 	Ants(FeromoneTable *feromoneTable, Tasks *tasks, Breaks *breaks, int number_of_tasks, int number_of_breaks, int number_of_ants);
 	~Ants();
 };
