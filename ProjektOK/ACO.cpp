@@ -229,11 +229,26 @@ void ACO::startAlgorithm()
 {
 	generateTasks(Parameters::Tasks::Length::MAX, Parameters::Tasks::Length::MIN);
 	generateBreaks();
-
 	ants = new Ants(&feromone_table, &tasks, &breaks, number_of_tasks, number_of_breaks, number_of_ants);
-	for (int i = 0; i <5; i++) {
-		std::cout << getSolutionLength(ants->generateFinalSolution(i));
+	int bestSolutionLength;
+	for (int i = 0; i < Parameters::Iterations::NUMBER; i++) {
+		if (i == 0) {
+			solution = ants->generateFinalSolution(i);
+			bestSolutionLength = getSolutionLength(solution);
+		}
+		else {
+			Solution currentSolution = ants->generateFinalSolution(i);
+			int currentLength = getSolutionLength(currentSolution);
+			if (bestSolutionLength > currentLength) {
+				bestSolutionLength = currentLength;
+				solution = currentSolution;
+			}
+			std::cout << currentLength << std::endl;
+		}
+		feromoneEvaporation(Parameters::Feromone_Table::VAPORING);
+		smoothingFeromoneTable();
 	}
+	std::cout << bestSolutionLength << std::endl;
 }
 
 void ACO::loadFromFile(std::string name)
