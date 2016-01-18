@@ -22,16 +22,19 @@ Solution Ants::generateSingleSolution(int turn)
 		unasignedTasks.push_back(true);
 	}
 	
-	retVal.resize(number_of_tasks);
+	retVal.resize(2);
 	for (auto &row : retVal)
-		row.resize(2);
+		row.resize(number_of_tasks);
 	int randomVal = rand() % number_of_tasks; 
 	retVal[0][0] = randomVal;
 	unasignedTasks[randomVal] = false;
 
 	for (int i = 1; i < number_of_tasks; i++) {
-		retVal[i][0] = pickNextElenemtForSolution(isItUsingTable(turn), retVal[i - 1][0], unasignedTasks);
-		unasignedTasks[retVal[i][0]] = false;
+		int nextElement = pickNextElenemtForSolution(isItUsingTable(turn), retVal[0][i-1], unasignedTasks);
+		for (auto &value : retVal) {
+			value[i] = nextElement;
+		}
+		unasignedTasks[retVal[0][i]] = false;
 	}
 	return retVal;
 }
@@ -121,7 +124,7 @@ Solution Ants::generateFinalSolution(int turn)
 
 void Ants::jumpToReadyTime(int task, int * pointer, int * currentBreak)
 {
-	if ((*pointer) < (*tasks)[task][2])
+	if ((*pointer) > (*tasks)[task][2])
 		return;
 	else if (*currentBreak < number_of_breaks) {
 		while (((*currentBreak) < (number_of_breaks - 1)) &&
@@ -138,7 +141,7 @@ void Ants::jumpToReadyTime(int task, int * pointer, int * currentBreak)
 		}
 	}
 	else {
-		*pointer = (*tasks)[task][2];
+		(*pointer) = (*tasks)[task][2];
 	}
 }
 
