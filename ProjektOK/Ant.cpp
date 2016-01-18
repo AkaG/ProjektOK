@@ -87,7 +87,7 @@ int Ants::pickNextElenemtForSolution(bool useTable, int previousTask, std::vecto
 			if (unasignedTasks[i])
 				ball -= (*feromone_table)[previousTask][i];
 			i++;
-			if (i > number_of_tasks)
+			if (i >= number_of_tasks)
 				i = 0;
 		}
 		retVal = i;
