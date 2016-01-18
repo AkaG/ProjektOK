@@ -79,6 +79,9 @@ int Ants::pickNextElenemtForSolution(bool useTable, int previousTask, std::vecto
 			if (unasignedTasks[++i])
 				sumOfAll += feromone;
 		}
+		if (sumOfAll == 0)
+			sumOfAll = 1;
+
 		int ball = rand() % sumOfAll;
 		i = -1;
 		while (!unasignedTasks[++i]);

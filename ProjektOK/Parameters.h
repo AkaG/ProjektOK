@@ -4,7 +4,7 @@ namespace Parameters {
 	namespace Feromone_Table {
 		const int		INITIAL_VALUE		= 1;
 		const float		VAPORING			= 5;
-		const float		ADDING_BONUS		= 0.5;
+		const float		ADDING_BONUS		= 0.9;
 	}
 
 	namespace Ants {
