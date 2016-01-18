@@ -11,7 +11,6 @@ using namespace std;
 
 int main(){
 	srand((unsigned int)time(NULL));
-	int n = 50;
 	ACO *aco;
 	aco = new ACO(Parameters::Tasks::NUMBER, Parameters::Ants::NUMBER);
 

@@ -179,8 +179,6 @@ void Ants::writeFeromoneToTable(Solution solution)
 
 	int solutionLength = getSolutionLength(solution);
 
-	std::cout << "Solution Length: " << solutionLength << "\n";
-
 	for (auto &operation : solution[0]) {
 		if (operation != previousOperation) {
 			(*feromone_table)[previousOperation][operation] += sumOfTasksAndBreaks - solutionLength;
@@ -203,8 +201,11 @@ Ants::Ants(FeromoneTable *table, Tasks *tasks, Breaks *breaks, int number_of_tas
 	this->number_of_tasks = number_of_tasks;
 	this->number_of_ants = number_of_ants;
 
-	this->sumOfTasksAndBreaks = 0;
+	sumOfTasksAndBreaks = 0;
 	for (auto element : (*tasks)[0]) {
+		sumOfTasksAndBreaks += element;
+	}
+	for (auto element : (*tasks)[1]) {
 		sumOfTasksAndBreaks += element;
 	}
 	sumOfTasksAndBreaks += (*breaks)[number_of_breaks - 1][1];

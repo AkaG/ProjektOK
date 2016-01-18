@@ -18,7 +18,7 @@ private:
 	// tablica [n][3] z czasem gotowoœci wylosowanymi 
 	// czasami zadan na poszczególne maszyny
 	Tasks tasks; 
-	Breaks breaks; //tablica [m][2] z czasami przerwan 0-rozpoczecie przerwy 1 maszyny, 1-zakonczenie
+	Breaks breaks;	//tablica [m][2] z czasami przerwan 0-rozpoczecie przerwy 1 maszyny, 1-zakonczenie
 	int number_of_tasks, number_of_breaks, max_task_length, min_task_length;
 	int number_of_ants;
 	

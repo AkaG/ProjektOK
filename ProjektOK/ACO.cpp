@@ -32,7 +32,6 @@ ACO::ACO(int number_of_tasks, int number_of_ants)
 		}
 	}
 
-	ants = new Ants(&feromone_table, &tasks, &breaks, number_of_tasks, number_of_breaks, number_of_ants);
 }
 
 ACO::ACO(std::string fileName, int number_of_ants)
@@ -57,7 +56,6 @@ void ACO::generateTasks(int max, int min)
 	for (int i = 0; i < number_of_tasks; i++) {
 		tasks[i][0] = (rand() % (max_task_length - min_task_length)) + min_task_length;
 		tasks[i][1] = (rand() % (max_task_length - min_task_length)) + min_task_length;
-		tasks[i][2] = (rand() % (min_task_length * number_of_tasks + number_of_breaks));
 	}
 }
 
@@ -81,6 +79,11 @@ void ACO::generateBreaks()
 	for (int i = 1; i < number_of_breaks; i++){
 		breaks[i][0] = breaks[i - 1][1] + ((rand() % (3 * max_task_length)) + min_task_length);
 		breaks[i][1] = breaks[i][0] + ((rand() % maxBreak) + minBreak);
+	}
+	
+	for (auto &task : tasks) {
+		int random = (rand() % (breaks[number_of_breaks - 1][1]));
+		task[2] = random;
 	}
 }
 
@@ -227,6 +230,7 @@ void ACO::startAlgorithm()
 	generateTasks(Parameters::Tasks::Length::MAX, Parameters::Tasks::Length::MIN);
 	generateBreaks();
 
+	ants = new Ants(&feromone_table, &tasks, &breaks, number_of_tasks, number_of_breaks, number_of_ants);
 	for (int i = 0; i <5; i++) {
 		std::cout << getSolutionLength(ants->generateFinalSolution(i));
 	}
