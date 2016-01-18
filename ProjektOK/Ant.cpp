@@ -170,7 +170,7 @@ void Ants::putInSecondMachine(int task, int * pointer, int *secondMachinePointer
 {
 	if ((*secondMachinePointer) < (*pointer))
 		(*secondMachinePointer) = (*pointer);
-	for (int i = (*secondMachinePointer); (*secondMachinePointer) < (*tasks)[task][1] + i; ((*secondMachinePointer))++);
+	for (int i = (*secondMachinePointer); (*secondMachinePointer) < (*tasks)[task][1] + i; (*secondMachinePointer)++);
 }
 
 void Ants::writeFeromoneToTable(Solution solution)
@@ -205,8 +205,8 @@ Ants::Ants(FeromoneTable *table, Tasks *tasks, Breaks *breaks, int number_of_tas
 	for (auto element : (*tasks)[0]) {
 		sumOfTasksAndBreaks += element;
 	}
-	for (auto element : (*tasks)[1]) {
-		sumOfTasksAndBreaks += element;
+	for (auto element : (*tasks)) {
+		sumOfTasksAndBreaks += element[0] + element[1];
 	}
 	sumOfTasksAndBreaks += (*breaks)[number_of_breaks - 1][1];
 }
