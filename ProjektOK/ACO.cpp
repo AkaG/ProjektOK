@@ -222,6 +222,16 @@ void ACO::smoothingFeromoneTable()
 	}
 }
 
+void ACO::startAlgorithm()
+{
+	generateTasks(Parameters::Tasks::Length::MAX, Parameters::Tasks::Length::MIN);
+	generateBreaks();
+
+	for (int i = 0; i <5; i++) {
+		std::cout << getSolutionLength(ants->generateFinalSolution(i));
+	}
+}
+
 void ACO::loadFromFile(std::string name)
 {
 	std::fstream file;

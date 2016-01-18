@@ -19,4 +19,6 @@ namespace Parameters {
 			const int	MAX					= 100;
 		}
 	}
+
+	const int NUMBER_OF_ITERATIONS = 10;
 }

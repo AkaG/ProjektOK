@@ -18,7 +18,6 @@ private:
 	// tablica [n][3] z czasem gotowoœci wylosowanymi 
 	// czasami zadan na poszczególne maszyny
 	Tasks tasks; 
-
 	Breaks breaks; //tablica [m][2] z czasami przerwan 0-rozpoczecie przerwy 1 maszyny, 1-zakonczenie
 	int number_of_tasks, number_of_breaks, max_task_length, min_task_length;
 	int number_of_ants;
@@ -36,7 +35,6 @@ public:
 	void generateTasks(int max, int min);
 	void generateBreaks();
     Solution generateRandomSolution();
-
 	Solution getSolution();
 	void printSolution(Solution solution);
 
@@ -45,6 +43,8 @@ public:
 	void feromoneEvaporation(float p);
 
 	void smoothingFeromoneTable();
+
+	void startAlgorithm();
 	
 	void loadFromFile(std::string name);
 

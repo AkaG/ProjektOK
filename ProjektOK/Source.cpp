@@ -15,17 +15,7 @@ int main(){
 	ACO *aco;
 	aco = new ACO(Parameters::Tasks::NUMBER, Parameters::Ants::NUMBER);
 
-	aco->generateTasks(Parameters::Tasks::Length::MAX, Parameters::Tasks::Length::MIN);
-	aco->generateBreaks();
-	
-	Solution solution = aco->generateRandomSolution();
-	aco->printSolution(solution);
-	std::cout << std::endl << aco->getSolutionLength(solution) << std::endl;
-
-	aco->feromoneEvaporation(Parameters::Feromone_Table::VAPORING);
-	aco->smoothingFeromoneTable();
-
-	aco->loadFromFile("Instance one");
+	aco->startAlgorithm();
 
 	delete aco;
 
