@@ -181,7 +181,7 @@ void Ants::writeFeromoneToTable(Solution solution)
 
 	for (auto &operation : solution[0]) {
 		if (operation != previousOperation) {
-			(*feromone_table)[previousOperation][operation] += sumOfTasksAndBreaks - solutionLength;
+			(*feromone_table)[previousOperation][operation] += (sumOfTasksAndBreaks - solutionLength) + ((sumOfTasksAndBreaks - solutionLength)*Parameters::Feromone_Table::ADDING_BONUS);
 			previousOperation = operation;
 		}
 	}
