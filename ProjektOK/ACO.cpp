@@ -317,3 +317,89 @@ void ACO::loadFromFile(std::string name)
 
 	file.close();
 }
+
+void ACO::saveToFile(std::string name)
+{
+	std::fstream file;
+	file.open(name, std::ios::out);
+	if (file.is_open()) {
+		file << "M1: ";
+		int currentBreak = 0;
+		int prevBreak = 0;
+		int currentIdle = 0;
+		int pointer = 0;
+		int prev = 0;
+
+		int breakSize = 0;
+		int idleSize = 0;
+		int idleSize2 = 0;
+		int idleCount = 0;
+		int idleCount2 = 0;
+
+		for (auto task : solution[0]) {
+			prev = pointer;
+			prevBreak = currentBreak;
+			ants->jumpToReadyTime(task, &pointer, &currentBreak);
+			ants->findPlaceInBreaks(task, &pointer, &currentBreak);
+
+			if (prev != pointer) {
+				if (prevBreak != currentBreak) {
+					for (int i = 0; i < (currentBreak - prevBreak); i++) {
+						if (breaks[prevBreak+i][0] > prev) {
+							file << "idle" << currentIdle++ << "_M1, " << prev << ", " << breaks[prevBreak + i][0] - prev << "; ";
+							idleSize += breaks[prevBreak + i][0] - prev;
+							idleCount++;
+							prev = breaks[prevBreak + i][0];
+						}
+						file << "maint" << prevBreak+i << "_M1, " << breaks[prevBreak + i][0] << ", " << breaks[prevBreak + i][1] - breaks[prevBreak + i][0] << "; ";
+						prev = breaks[prevBreak + i][1];
+					}
+				}
+				else {
+					file << "idle" << currentIdle++ << "_M1, " << prev << ", " << pointer - prev << "; ";
+					idleCount++;
+					idleSize += pointer - prev;
+				}
+			}
+
+			prev = pointer;
+			ants->putInFirstMachine(task, &pointer);
+
+			file << "op1_" << task << ", " << prev << ", " << tasks[task][0] << "; ";
+		}
+		file << std::endl << "M2: ";
+
+		pointer = 0;
+		prev = 0;
+		currentBreak = 0;
+		currentIdle = 0;
+
+		int secondMachinePointer = 0;
+
+		for (auto task : solution[0]) {
+			ants->jumpToReadyTime(task, &pointer, &currentBreak);
+			ants->findPlaceInBreaks(task, &pointer, &currentBreak);
+			ants->putInFirstMachine(task, &pointer);
+			if (prev != pointer) {
+				file << "idle" << currentIdle++ << "_M2, " << prev << ", " << pointer - prev << "; ";
+				idleCount2++;
+				idleSize2 += pointer - prev;
+				prev = pointer;
+			}
+			prev = pointer;
+			ants->putInSecondMachine(task, &pointer, &secondMachinePointer);
+			file << "op2_" << task << ", " << prev << ", " << secondMachinePointer << "; ";
+		}
+
+		file << std::endl;
+
+		for (auto it : breaks) {
+			breakSize += it[1] - it[0];
+		}
+
+		file << number_of_breaks << "_M1; " << breakSize << "_M1" << std::endl;
+		file << idleCount << "_M1; " << idleSize << "_M1" << std::endl;
+		file << idleCount2 << "_M2; " << idleSize2 << "_M2" << std::endl;
+	}
+	file.close();
+}

@@ -47,6 +47,7 @@ public:
 	void startAlgorithm();
 	
 	void loadFromFile(std::string name);
+	void saveToFile(std::string name);
 
 };
 

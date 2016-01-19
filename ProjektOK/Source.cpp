@@ -15,7 +15,7 @@ int main(){
 	aco = new ACO(Parameters::Tasks::NUMBER, Parameters::Ants::NUMBER);
 
 	aco->startAlgorithm();
-
+	aco->saveToFile("halo.txt");
 	delete aco;
 
 	system("pause");

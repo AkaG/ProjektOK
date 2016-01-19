@@ -21,6 +21,6 @@ namespace Parameters {
 		}
 	}
 	namespace Iterations {
-		const int NUMBER = 100;
+		const int NUMBER = 10;
 	}
 }
