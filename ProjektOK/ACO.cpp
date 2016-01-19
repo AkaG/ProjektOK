@@ -235,6 +235,7 @@ void ACO::startAlgorithm()
 		if (i == 0) {
 			solution = ants->generateFinalSolution(i);
 			bestSolutionLength = getSolutionLength(solution);
+			startingSolution = solution;
 		}
 		else {
 			Solution currentSolution = ants->generateFinalSolution(i);
@@ -323,7 +324,7 @@ void ACO::saveToFile(std::string name)
 	std::fstream file;
 	file.open(name, std::ios::out);
 	if (file.is_open()) {
-		file << "M1: ";
+		
 		int currentBreak = 0;
 		int prevBreak = 0;
 		int currentIdle = 0;
@@ -336,6 +337,9 @@ void ACO::saveToFile(std::string name)
 		int idleCount = 0;
 		int idleCount2 = 0;
 
+		file << getSolutionLength(solution) << ", " << getSolutionLength(startingSolution) << std::endl;
+
+		file << "M1: ";
 		for (auto task : solution[0]) {
 			prev = pointer;
 			prevBreak = currentBreak;
@@ -388,7 +392,7 @@ void ACO::saveToFile(std::string name)
 			}
 			prev = pointer;
 			ants->putInSecondMachine(task, &pointer, &secondMachinePointer);
-			file << "op2_" << task << ", " << prev << ", " << secondMachinePointer << "; ";
+			file << "op2_" << task << ", " << prev << ", " << tasks[task][1] << "; ";
 		}
 
 		file << std::endl;

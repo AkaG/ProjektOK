@@ -23,6 +23,7 @@ private:
 	int number_of_ants;
 	
 	Solution solution; //tablica [2][n] z kolejnoœci¹ zadañ
+	Solution startingSolution;
 
 	Ants *ants;
 
