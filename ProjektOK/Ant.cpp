@@ -83,9 +83,8 @@ int Ants::pickNextElenemtForSolution(bool useTable, int previousTask, std::vecto
 			sumOfAll = 1;
 
 		int ball = rand() % sumOfAll;
-		i = -1;
-		while (!unasignedTasks[++i]);
-
+		
+		i = 0;
 		while (ball > 0) {
 			i++;
 			if (i >= number_of_tasks)

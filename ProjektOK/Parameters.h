@@ -13,7 +13,7 @@ namespace Parameters {
 	}
 
 	namespace Tasks {
-		const int		NUMBER				= 5;
+		const int		NUMBER				= 100;
 
 		namespace Length {
 			const int	MIN					= 50;
