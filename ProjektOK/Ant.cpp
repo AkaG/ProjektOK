@@ -67,7 +67,6 @@ int Ants::pickNextElenemtForSolution(bool useTable, int previousTask, std::vecto
 				i = 0;
 
 			if (unasignedTasks[i]) {
-			
 				ball--;
 			}
 		}
@@ -88,11 +87,11 @@ int Ants::pickNextElenemtForSolution(bool useTable, int previousTask, std::vecto
 		while (!unasignedTasks[++i]);
 
 		while (ball > 0) {
-			if (unasignedTasks[i])
-				ball -= (*feromone_table)[previousTask][i];
 			i++;
 			if (i >= number_of_tasks)
 				i = 0;
+			if (unasignedTasks[i])
+				ball -= (*feromone_table)[previousTask][i];
 		}
 		retVal = i;
 	}
