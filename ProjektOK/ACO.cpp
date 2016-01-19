@@ -8,7 +8,7 @@ ACO::ACO()
 ACO::ACO(int number_of_tasks, int number_of_ants)
 {
 	this->number_of_tasks = number_of_tasks;
-	this->number_of_breaks = (rand() % (number_of_tasks / 2 - 2)) + 2;
+	this->number_of_breaks = (rand() % (number_of_tasks / 2 + 1)) + 2;
 	this->number_of_ants = number_of_ants;
 
 	tasks.resize(this->number_of_tasks);

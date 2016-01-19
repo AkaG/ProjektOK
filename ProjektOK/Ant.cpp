@@ -62,13 +62,14 @@ int Ants::pickNextElenemtForSolution(bool useTable, int previousTask, std::vecto
 		int i = -1;
 		while (!unasignedTasks[++i]);
 		while (ball > 0) {
+			i++;
+			if (i >= number_of_tasks)
+				i = 0;
+
 			if (unasignedTasks[i]) {
 			
 				ball--;
 			}
-			i++;
-			if (i >= number_of_tasks)
-				i = 0;
 		}
 		retVal = i;
 	}
