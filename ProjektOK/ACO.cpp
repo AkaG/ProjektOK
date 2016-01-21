@@ -7,6 +7,7 @@ ACO::ACO()
 
 ACO::ACO(int number_of_tasks, int number_of_ants)
 {
+	this->instanceNumber = std::to_string(0);
 	this->number_of_tasks = number_of_tasks;
 	this->number_of_breaks = (rand() % (number_of_tasks / 2 + 1)) + 2;
 	this->number_of_ants = number_of_ants;
@@ -260,7 +261,7 @@ void ACO::loadFromFile(std::string name)
 	file.open(name, std::ios::in);
 	if (file.is_open()) {
 
-		std::getline(file, input);
+		std::getline(file, instanceNumber);
 
 		int count;
 		file >> count;

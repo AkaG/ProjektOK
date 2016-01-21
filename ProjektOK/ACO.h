@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <string>
 
 #include "Ant.h"
 
@@ -24,6 +25,8 @@ private:
 	
 	Solution solution; //tablica [2][n] z kolejnoœci¹ zadañ
 	Solution startingSolution;
+
+	std::string instanceNumber;
 
 	Ants *ants;
 
