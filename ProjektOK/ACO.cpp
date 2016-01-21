@@ -7,6 +7,7 @@ ACO::ACO()
 
 ACO::ACO(int number_of_tasks, int number_of_ants)
 {
+	this->instanceNumber = std::to_string(0);
 	this->number_of_tasks = number_of_tasks;
 	this->number_of_breaks = (rand() % (number_of_tasks / 2 + 1)) + 2;
 	this->number_of_ants = number_of_ants;
@@ -229,8 +230,6 @@ void ACO::smoothingFeromoneTable()
 
 void ACO::startAlgorithm()
 {
-	generateTasks(Parameters::Tasks::Length::MAX, Parameters::Tasks::Length::MIN);
-	generateBreaks();
 	ants = new Ants(&feromone_table, &tasks, &breaks, number_of_tasks, number_of_breaks, number_of_ants);
 	int bestSolutionLength;
 	for (int i = 0; i < Parameters::Iterations::NUMBER; i++) {
@@ -263,7 +262,7 @@ void ACO::loadFromFile(std::string name)
 	file.open(name, std::ios::in);
 	if (file.is_open()) {
 
-		std::getline(file, input);
+		std::getline(file, instanceNumber);
 
 		int count;
 		file >> count;
@@ -277,6 +276,12 @@ void ACO::loadFromFile(std::string name)
 		feromone_table.resize(count);
 		for (auto &i : feromone_table) {
 			i.resize(count);
+		}
+
+		for (auto &row : feromone_table) {
+			for (auto &element : row) {
+				element = Parameters::Feromone_Table::INITIAL_VALUE;
+			}
 		}
 
 		std::getline(file, input);
@@ -339,7 +344,7 @@ void ACO::saveToFile(std::string name)
 		int idleSize2 = 0;
 		int idleCount = 0;
 		int idleCount2 = 0;
-
+		file << "Instance nr: " << instanceNumber.c_str() << std::endl;
 		file << getSolutionLength(solution) << ", " << getSolutionLength(startingSolution) << std::endl;
 
 		file << "M1: ";

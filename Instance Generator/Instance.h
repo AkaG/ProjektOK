@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <fstream>
+#include <string>
 
 typedef std::vector<std::vector<int>> Tasks, Breaks;
 
@@ -17,5 +18,5 @@ public:
 	void generateTasks(int max, int min);
 	void generateBreaks();
 
-	void saveToFile(char* filename);
+	void saveToFile(std::string filename);
 };

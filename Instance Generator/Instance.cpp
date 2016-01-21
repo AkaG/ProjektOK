@@ -44,7 +44,7 @@ void Instance::generateBreaks()
 		if (tasks[i][0] < shortest)
 			shortest = tasks[i][0];
 	}
-	
+
 	breaks[0][0] = ((rand() % 3) + 1) * shortest;
 	breaks[0][1] = breaks[0][0] + ((rand() % maxBreak) + minBreak);
 
@@ -54,15 +54,15 @@ void Instance::generateBreaks()
 	}
 	
 	for (auto &task : tasks) {
-		int random = (rand() % (breaks[number_of_breaks - 1][1]));
+		int random = (rand() % ((breaks[number_of_breaks - 1][1]))/3);
 		task[2] = random;
 	}
 
 }
 
-void Instance::saveToFile(char * filename)
+void Instance::saveToFile(std::string filename)
 {
-	std::fstream out(filename,	fstream::out);
+	std::fstream out(filename.c_str(),	fstream::out);
 
 	out << ID << endl;
 	out << number_of_tasks << endl;

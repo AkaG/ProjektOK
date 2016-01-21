@@ -49,8 +49,8 @@ Solution Ants::generateSingleSolution(int turn)
 			retVal[0][0] = i;
 	}
 	else {
-		int randomVal = rand() % number_of_tasks;
-		retVal[0][0] = randomVal;
+	int randomVal = rand() % number_of_tasks; 
+	retVal[0][0] = randomVal;
 	}
 	unasignedTasks[retVal[0][0]] = false;
 
@@ -233,9 +233,7 @@ Ants::Ants(FeromoneTable *table, Tasks *tasks, Breaks *breaks, int number_of_tas
 	this->number_of_ants = number_of_ants;
 
 	sumOfTasksAndBreaks = 0;
-	for (auto element : (*tasks)[0]) {
-		sumOfTasksAndBreaks += element;
-	}
+
 	for (auto element : (*tasks)) {
 		sumOfTasksAndBreaks += element[0] + element[1];
 	}
