@@ -337,7 +337,7 @@ void ACO::saveToFile(std::string name)
 		int idleSize2 = 0;
 		int idleCount = 0;
 		int idleCount2 = 0;
-
+		file << "Instance nr: " << instanceNumber.c_str() << std::endl;
 		file << getSolutionLength(solution) << ", " << getSolutionLength(startingSolution) << std::endl;
 
 		file << "M1: ";
