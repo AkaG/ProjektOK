@@ -21,7 +21,7 @@ ACO::ACO(int number_of_tasks, int number_of_ants)
 		i.resize(2);
 	}
 
-	feromone_table.resize(this->number_of_tasks);
+	feromone_table.resize(this->number_of_tasks+1);
 	for (auto &i : feromone_table) {
 		i.resize(this->number_of_tasks);
 	}
@@ -187,6 +187,8 @@ void ACO::feromoneEvaporation(float p)
 	for (auto &row : feromone_table) {
 		for (auto &element : row) {
 			element = (int)((float)element*(1 - p));
+			if (element == 0)
+				element = 1;
 		}
 	}
 }
@@ -210,8 +212,8 @@ void ACO::smoothingFeromoneTable()
 
 	midValue = ((float)(min + max)/2);
 
-	int upDelta = (int)(((midValue - min)*((float)min / midValue)));
-	int downDelta = (int)(((max - midValue)*(midValue / max)));
+	int upDelta = (int)(((midValue - min)*((float)min / midValue)))*0.01;
+	int downDelta = (int)(((max - midValue)*(midValue / max)))*0.01;
 
 	for (auto &row : feromone_table) {
 		for (auto &element : row) {
@@ -234,8 +236,9 @@ void ACO::startAlgorithm()
 	for (int i = 0; i < Parameters::Iterations::NUMBER; i++) {
 		if (i == 0) {
 			solution = ants->generateFinalSolution(i);
-			bestSolutionLength = getSolutionLength(solution);
+			bestSolutionLength = ants->getSolutionLength(solution);
 			startingSolution = solution;
+			std::cout << bestSolutionLength << "\t" << bestSolutionLength << std::endl;
 		}
 		else {
 			Solution currentSolution = ants->generateFinalSolution(i);

@@ -25,9 +25,35 @@ Solution Ants::generateSingleSolution(int turn)
 	retVal.resize(2);
 	for (auto &row : retVal)
 		row.resize(number_of_tasks);
-	int randomVal = rand() % number_of_tasks; 
-	retVal[0][0] = randomVal;
-	unasignedTasks[randomVal] = false;
+
+	if (isItUsingTable(turn)) {
+			int sumOfAll = 0;
+			int i = -1;
+			for (auto feromone : (*feromone_table)[number_of_tasks]) {
+				if (unasignedTasks[++i])
+					sumOfAll += feromone;
+			}
+			if (sumOfAll == 0)
+				sumOfAll = 1;
+
+			int ball = rand() % sumOfAll;
+
+			i = 0;
+			while (ball > 0) {
+				if (unasignedTasks[i]) 
+					ball -= (*feromone_table)[number_of_tasks][i];
+				i++;
+				if (i >= number_of_tasks)
+					i = 0;
+			}
+			retVal[0][0] = i;
+	}
+	else {
+		int randomVal = rand() % number_of_tasks;
+		retVal[0][0] = randomVal;
+	}
+	unasignedTasks[retVal[0][0]] = false;
+
 
 	for (int i = 1; i < number_of_tasks; i++) {
 		int nextElement = pickNextElenemtForSolution(isItUsingTable(turn), retVal[0][i-1], unasignedTasks);
@@ -181,9 +207,12 @@ void Ants::writeFeromoneToTable(Solution solution)
 
 	int solutionLength = getSolutionLength(solution);
 
+	(*feromone_table)[number_of_tasks][previousOperation] = (sumOfTasksAndBreaks - solutionLength) + ((sumOfTasksAndBreaks - solutionLength)*Parameters::Feromone_Table::ADDING_BONUS);
+
 	for (auto &operation : solution[0]) {
 		if (operation != previousOperation) {
-			(*feromone_table)[previousOperation][operation] += (sumOfTasksAndBreaks - solutionLength) + ((sumOfTasksAndBreaks - solutionLength)*Parameters::Feromone_Table::ADDING_BONUS);
+			//(*feromone_table)[previousOperation][operation] += (sumOfTasksAndBreaks - solutionLength) + ((sumOfTasksAndBreaks - solutionLength)*Parameters::Feromone_Table::ADDING_BONUS);
+			(*feromone_table)[previousOperation][operation] +=  Parameters::Feromone_Table::ADDING_BONUS*sumOfTasksAndBreaks / solutionLength;
 			previousOperation = operation;
 		}
 	}
