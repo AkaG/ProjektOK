@@ -54,7 +54,7 @@ void Instance::generateBreaks()
 	}
 	
 	for (auto &task : tasks) {
-		int random = (rand() % (breaks[number_of_breaks - 1][1]));
+		int random = (rand() % ((breaks[number_of_breaks - 1][1]))/3);
 		task[2] = random;
 	}
 
