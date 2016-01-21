@@ -6,13 +6,14 @@
 using namespace std;
 
 int main() {
-	Instance* instance = new Instance(50, 1);
+	Instance* instance;
 
-	instance->generateTasks(10, 100);
-	instance->generateBreaks();
-
-	instance->saveToFile("Instance one");
-
+	for (int i = 0;i < 5;i++) {
+		instance = new Instance(50+20*i, i);
+		instance->generateTasks(100, 150);
+		instance->generateBreaks();
+		instance->saveToFile(1);
+	}
 	system("pause");
 	return 0;
 }

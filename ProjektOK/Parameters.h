@@ -8,19 +8,19 @@ namespace Parameters {
 	}
 
 	namespace Ants {
-		const int		NUMBER				= 25;
+		const int		NUMBER				= 30;
 		const float		TABLE_PROBABILITY	= 1.5; // im wiêcej tym d³u¿ej random ma wiêksze szanse
 	}
 
 	namespace Tasks {
-		const int		NUMBER				= 100;
+		const int		NUMBER				= 50;
 
 		namespace Length {
 			const int	MIN					= 50;
-			const int	MAX = 150;
+			const int	MAX					= 150;
 		}
 	}
 	namespace Iterations {
-		const int NUMBER = 10;
+		const int NUMBER = 100;
 	}
 }

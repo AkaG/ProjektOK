@@ -27,7 +27,7 @@ void Instance::generateTasks(int max, int min)
 	for (int i = 0; i < number_of_tasks; i++) {
 		tasks[i][0] = (rand() % (max_task_length - min_task_length)) + min_task_length;
 		tasks[i][1] = (rand() % (max_task_length - min_task_length)) + min_task_length;
-		tasks[i][2] = (rand() % (min_task_length*number_of_tasks + number_of_breaks * 50));
+		tasks[i][2] = (rand() % (min_task_length*number_of_tasks));
 	}
 }
 
