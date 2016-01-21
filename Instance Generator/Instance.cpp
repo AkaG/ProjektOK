@@ -27,31 +27,37 @@ void Instance::generateTasks(int max, int min)
 	for (int i = 0; i < number_of_tasks; i++) {
 		tasks[i][0] = (rand() % (max_task_length - min_task_length)) + min_task_length;
 		tasks[i][1] = (rand() % (max_task_length - min_task_length)) + min_task_length;
-		tasks[i][2] = (rand() % (min_task_length*number_of_tasks + number_of_breaks * 50));
 	}
 }
 
 void Instance::generateBreaks()
 {
+	
 	int sumOfTasks = 0;
 	int shortest = max_task_length;
 
 	int minBreak = 5;
 	int maxBreak = 50;
 
-	for (int i = 0; i < number_of_tasks; i++) {
+	for (int i = 0; i < number_of_tasks; i++){
 		sumOfTasks += tasks[i][0];
 		if (tasks[i][0] < shortest)
 			shortest = tasks[i][0];
 	}
-
+	
 	breaks[0][0] = ((rand() % 3) + 1) * shortest;
 	breaks[0][1] = breaks[0][0] + ((rand() % maxBreak) + minBreak);
 
-	for (int i = 1; i < number_of_breaks; i++) {
+	for (int i = 1; i < number_of_breaks; i++){
 		breaks[i][0] = breaks[i - 1][1] + ((rand() % (3 * max_task_length)) + min_task_length);
 		breaks[i][1] = breaks[i][0] + ((rand() % maxBreak) + minBreak);
 	}
+	
+	for (auto &task : tasks) {
+		int random = (rand() % (breaks[number_of_breaks - 1][1]));
+		task[2] = random;
+	}
+
 }
 
 void Instance::saveToFile(char * filename)
