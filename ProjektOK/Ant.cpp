@@ -207,7 +207,7 @@ void Ants::writeFeromoneToTable(Solution solution)
 
 	int solutionLength = getSolutionLength(solution);
 
-	(*feromone_table)[number_of_tasks][previousOperation] = (sumOfTasksAndBreaks - solutionLength) + ((sumOfTasksAndBreaks - solutionLength)*Parameters::Feromone_Table::ADDING_BONUS);
+	(*feromone_table)[number_of_tasks][previousOperation] = Parameters::Feromone_Table::ADDING_BONUS*sumOfTasksAndBreaks / solutionLength;
 
 	for (auto &operation : solution[0]) {
 		if (operation != previousOperation) {

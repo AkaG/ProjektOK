@@ -273,7 +273,7 @@ void ACO::loadFromFile(std::string name)
 			i.resize(3);
 		}
 
-		feromone_table.resize(count);
+		feromone_table.resize(count+1);
 		for (auto &i : feromone_table) {
 			i.resize(count);
 		}
