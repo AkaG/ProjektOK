@@ -5,11 +5,12 @@ namespace Parameters {
 		const int		INITIAL_VALUE		= 100;
 		const float		VAPORING			= 10;
 		const float		ADDING_BONUS		= 3;
+		const float		ADDING_DIVIDER		= 0.2;
 	}
 
 	namespace Ants {
 		const int		NUMBER				= 25;
-		const float		TABLE_PROBABILITY	= 40; // im wiêcej tym d³u¿ej random ma wiêksze szanse
+		const float		TABLE_PROBABILITY	= 10; // im wiêcej tym d³u¿ej random ma wiêksze szanse
 	}
 
 	namespace Tasks {

@@ -183,7 +183,7 @@ void Ants::writeFeromoneToTable(Solution solution)
 
 	for (auto &operation : solution[0]) {
 		if (operation != previousOperation) {
-			(*feromone_table)[previousOperation][operation] += (sumOfTasksAndBreaks - solutionLength) + ((sumOfTasksAndBreaks - solutionLength)*Parameters::Feromone_Table::ADDING_BONUS);
+			(*feromone_table)[previousOperation][operation] += ((sumOfTasksAndBreaks - solutionLength) + ((sumOfTasksAndBreaks - solutionLength)*Parameters::Feromone_Table::ADDING_BONUS))*Parameters::Feromone_Table::ADDING_DIVIDER;
 			previousOperation = operation;
 		}
 	}
@@ -204,9 +204,7 @@ Ants::Ants(FeromoneTable *table, Tasks *tasks, Breaks *breaks, int number_of_tas
 	this->number_of_ants = number_of_ants;
 
 	sumOfTasksAndBreaks = 0;
-	for (auto element : (*tasks)[0]) {
-		sumOfTasksAndBreaks += element;
-	}
+
 	for (auto element : (*tasks)) {
 		sumOfTasksAndBreaks += element[0] + element[1];
 	}

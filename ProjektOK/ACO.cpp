@@ -228,8 +228,6 @@ void ACO::smoothingFeromoneTable()
 
 void ACO::startAlgorithm()
 {
-	generateTasks(Parameters::Tasks::Length::MAX, Parameters::Tasks::Length::MIN);
-	generateBreaks();
 	ants = new Ants(&feromone_table, &tasks, &breaks, number_of_tasks, number_of_breaks, number_of_ants);
 	int bestSolutionLength;
 	for (int i = 0; i < Parameters::Iterations::NUMBER; i++) {
