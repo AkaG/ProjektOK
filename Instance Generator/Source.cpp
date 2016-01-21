@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <string>
 
 #include "Instance.h"
 
@@ -12,7 +14,8 @@ int main() {
 		instance = new Instance(50+20*i, i);
 		instance->generateTasks(100, 150);
 		instance->generateBreaks();
-		instance->saveToFile(1);
+		instance->saveToFile(std::to_string(i));
+		delete instance;
 	}
 	system("pause");
 	return 0;

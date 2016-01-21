@@ -60,9 +60,9 @@ void Instance::generateBreaks()
 
 }
 
-void Instance::saveToFile(char * filename)
+void Instance::saveToFile(std::string filename)
 {
-	std::fstream out(filename,	fstream::out);
+	std::fstream out(filename.c_str(),	fstream::out);
 
 	out << ID << endl;
 	out << number_of_tasks << endl;
