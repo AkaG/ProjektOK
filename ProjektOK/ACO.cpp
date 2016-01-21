@@ -277,6 +277,12 @@ void ACO::loadFromFile(std::string name)
 			i.resize(count);
 		}
 
+		for (auto &row : feromone_table) {
+			for (auto &element : row) {
+				element = Parameters::Feromone_Table::INITIAL_VALUE;
+			}
+		}
+
 		std::getline(file, input);
 
 		for (int i = 0; i < count; i++) {
