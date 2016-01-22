@@ -16,6 +16,7 @@ int main(){
 			aco = new ACO(std::to_string(i).append(".txt"), Parameters::Ants::NUMBER);
 			aco->startAlgorithm();
 			aco->saveToFile(std::to_string(i).append("solved.txt"));
+			cout << endl;
 			delete aco;
 	}
 	system("pause");
