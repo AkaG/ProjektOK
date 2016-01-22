@@ -246,7 +246,8 @@ void ACO::startAlgorithm()
 				bestSolutionLength = currentLength;
 				solution = currentSolution;
 			}
-			std::cout << currentLength << "\t" << bestSolutionLength << std::endl;
+			if(i%10 == 0)
+				std::cout << currentLength << "\t" << bestSolutionLength << std::endl;
 		}
 		feromoneEvaporation(Parameters::Feromone_Table::VAPORING);
 		smoothingFeromoneTable();
