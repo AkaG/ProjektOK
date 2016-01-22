@@ -10,7 +10,7 @@ using namespace std;
 int main() {
 	Instance* instance;
 
-	for (int i = 0;i < 10;i++) {
+	for (int i = 0;i < 7;i++) {
 		instance = new Instance(50+20*i, i);
 		instance->generateTasks(100, 150);
 		instance->generateBreaks();
