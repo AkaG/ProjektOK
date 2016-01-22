@@ -2,13 +2,13 @@
 
 namespace Parameters {
 	namespace Feromone_Table {
-		const int		INITIAL_VALUE		= 100;
-		const float		VAPORING			= 0.7;
+		const int		INITIAL_VALUE		= 1;
+		const float		VAPORING			= 0.5;
 		const float		ADDING_BONUS		= 3;
 	}
 
 	namespace Ants {
-		const int		NUMBER				= 10;
+		const int		NUMBER				= 30;
 		const float		TABLE_PROBABILITY	= 50; // im wiêcej tym d³u¿ej random ma wiêksze szanse
 	}
 
@@ -21,6 +21,6 @@ namespace Parameters {
 		}
 	}
 	namespace Iterations {
-		const int NUMBER = 80;
+		const int NUMBER = 100;
 	}
 }
