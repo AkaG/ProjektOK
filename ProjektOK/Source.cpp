@@ -17,7 +17,6 @@ int main(){
 			aco->startAlgorithm();
 			aco->saveToFile(std::to_string(i).append("solved.txt"));
 			delete aco;
-		}
 	}
 	system("pause");
 	return 0;
